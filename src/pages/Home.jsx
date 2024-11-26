@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
@@ -9,9 +10,10 @@ const Home = () => {
         <Card.Text>
           This is the home page. Explore our products and services!
         </Card.Text>
-        <Button variant="primary" href="/products">
-          Go to Products
+        <Button variant="primary">
+          <Nav.Link as={Link} to="/products">Go to Products</Nav.Link>
         </Button>
+        
       </Card.Body>
     </Card>
   );
