@@ -4,6 +4,7 @@ import { useDeleteProductMutation, useGetProductsQuery } from "../features/produ
 import CustomModal from "../components/CustomModal";
 import TruncatedText from "../components/TruncatedText"; // Importa il nuovo componente
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { FaTh, FaList } from 'react-icons/fa'; // Import delle icone
 
 const Products = () => {
   const [layout, setLayout] = useState("panel"); // 'panel' o 'grid'
@@ -82,10 +83,10 @@ const Products = () => {
 
   return (
     <Container>
-      <h2 className="my-4">Products</h2>
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <Button variant="primary" onClick={toggleLayout}>
-          Cambia layout: {layout === "panel" ? "Griglia" : "Lista"}
+      <div className="row d-flex justify-content-between align-items-center mb-3">
+        <h2 className="col-auto mb-0 ">Products</h2>
+        <Button variant="primary" onClick={toggleLayout} className="col-auto mx-2">
+          {layout === "panel" ? <FaList /> : <FaTh />}
         </Button>
       </div>
 

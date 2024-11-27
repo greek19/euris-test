@@ -14,6 +14,8 @@ import {
   Pagination,
 } from "react-bootstrap";
 import { useAddProductMutation } from "../features/products/productsApi";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/auth/authSlice";
 
 const AddProduct = () => {
   const [reviews, setReviews] = React.useState([]);
@@ -21,6 +23,7 @@ const AddProduct = () => {
   const [showToast, setShowToast] = React.useState(false);
   const reviewsPerPage = 10;
   const [addProduct, { isLoading, isError, error }] = useAddProductMutation();
+  const user = useSelector(selectUser)
 
   const handlePageChange = (page) => setCurrentPage(page);
 
@@ -102,7 +105,7 @@ const AddProduct = () => {
           title: "",
           category: "",
           price: "",
-          employee: "",
+          employee: user.username,
           description: "",
           reviewInput: "",
         }}

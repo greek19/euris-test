@@ -10,7 +10,8 @@ import {
   CategoryScale,
   RadialLinearScale, // Importa la scala radialLinear
 } from 'chart.js';
-import { Container } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
+import { COLORS } from '../utility/constants';
 
 // Registrazione degli elementi necessari per il grafico
 ChartJS.register(
@@ -32,29 +33,15 @@ const CategoryChart = () => {
       {
         label: 'Prodotti per Categoria',
         data: data ? data.map(item => item.numberOfProducts) : [], 
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ], // Colori per ogni sezione
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ], // Colori del bordo
+        backgroundColor: COLORS,
+        borderColor: COLORS, 
         borderWidth: 1,
       },
     ],
   };
 
   // Gestione dei vari stati di richiesta
-  if (isLoading) return <p>Caricamento in corso...</p>;
+  if (isLoading) return <Spinner animation="border" />;
   if (error) return <p>Errore nel recupero dei dati: {error.message}</p>;
 
   return (
