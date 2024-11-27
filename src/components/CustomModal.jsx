@@ -7,11 +7,10 @@ const CustomModal = ({ show, onHide, title, children, footer }) => {
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{children}</Modal.Body>
-      {/* Aggiungiamo i bottoni come footer */}
-      <Modal.Footer>
-        {footer}
-      </Modal.Footer>
+      <Modal.Body style={{ maxHeight: "400px", overflowY: "auto" }}>
+        {children}
+      </Modal.Body>
+      <Modal.Footer>{footer}</Modal.Footer>
     </Modal>
   );
 };

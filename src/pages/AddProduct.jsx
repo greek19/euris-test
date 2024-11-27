@@ -1,89 +1,86 @@
-import React, { useState } from "react";
-import { Form, Button, Container, Alert, ListGroup, Row, Col, Card, Toast, ToastContainer } from "react-bootstrap";
-import { useAddProductMutation } from "../features/products/productsApi"; // Importa il servizio RTK Query
+import React from "react";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import {
+  Button,
+  Container,
+  Alert,
+  Card,
+  ListGroup,
+  Row,
+  Col,
+  Toast,
+  ToastContainer,
+  Pagination,
+} from "react-bootstrap";
+import { useAddProductMutation } from "../features/products/productsApi";
 
 const AddProduct = () => {
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [price, setPrice] = useState("");
-  const [employee, setEmployee] = useState("");
-  const [description, setDescription] = useState("");
-  const [reviewInput, setReviewInput] = useState(""); // Stato per l'input recensione
-  const [reviews, setReviews] = useState([]); // Stato per la lista recensioni
-  const [errors, setErrors] = useState({}); // Stato per gestire errori di validazione
-  const [success, setSuccess] = useState(false);
-  const [showToast, setShowToast] = useState(false); // Stato per il Toast
-
-  // Hook per la chiamata API
+  const [reviews, setReviews] = React.useState([]);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [showToast, setShowToast] = React.useState(false);
+  const reviewsPerPage = 10;
   const [addProduct, { isLoading, isError, error }] = useAddProductMutation();
 
-  // Validazione dei campi obbligatori
-  const validateFields = () => {
-    const newErrors = {};
-    if (!title.trim()) newErrors.title = "Il titolo è obbligatorio.";
-    if (!category.trim()) newErrors.category = "La categoria è obbligatoria.";
-    if (!price || isNaN(price) || parseFloat(price) <= 0)
-      newErrors.price = "Il prezzo deve essere un numero positivo.";
-    return newErrors;
-  };
+  const handlePageChange = (page) => setCurrentPage(page);
 
-  // Funzione per aggiungere una recensione alla lista
-  const handleAddReview = () => {
-    if (reviewInput.trim()) {
-      setReviews([...reviews, reviewInput.trim()]);
-      setReviewInput(""); // Resetta il campo di input
+  const paginatedReviews = reviews.slice(
+    (currentPage - 1) * reviewsPerPage,
+    currentPage * reviewsPerPage
+  );
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string()
+      .required("Il titolo è obbligatorio.")
+      .max(100, "Il titolo non può superare i 100 caratteri."),
+    category: Yup.string().required("La categoria è obbligatoria."),
+    price: Yup.number()
+      .typeError("Il prezzo deve essere un numero valido.")
+      .positive("Il prezzo deve essere maggiore di zero.")
+      .max(9999999.99, "Il prezzo non può superare 9999999.99.")
+      .required("Il prezzo è obbligatorio."),
+    employee: Yup.string().max(100, "Il nome del dipendente è troppo lungo."),
+    description: Yup.string().max(500, "La descrizione non può superare i 500 caratteri."),
+  });
+
+  const handleAddReview = (review, setFieldValue) => {
+    if (review.trim()) {
+      setReviews([...reviews, review.trim()]);
+      setFieldValue("reviewInput", ""); // Resetta il campo di input
     }
   };
 
-  // Funzione per eliminare una recensione dalla lista
   const handleDeleteReview = (index) => {
     setReviews(reviews.filter((_, i) => i !== index));
   };
 
-  // Funzione per gestire l'invio del prodotto
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const newErrors = validateFields();
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors); // Mostra errori
-      return;
-    }
-
-    // Crea il nuovo prodotto
+  const handleSubmit = async (values, { resetForm }) => {
     const newProduct = {
-      title,
-      category,
-      price: parseFloat(price),
-      employee,
-      description,
+      ...values,
+      price: parseFloat(values.price),
       reviews,
     };
 
     try {
-      const response = await addProduct(newProduct).unwrap(); // Chiamata all'API
-  
-      setSuccess(true);
+      await addProduct(newProduct).unwrap();
+
       setShowToast(true); // Mostra il Toast
-  
-      // Resetta il form
-      setTitle("");
-      setCategory("");
-      setPrice("");
-      setEmployee("");
-      setDescription("");
-      setReviews([]);
-      setErrors({});
+      resetForm(); // Resetta il form
+      setReviews([]); // Resetta le recensioni
     } catch (err) {
       console.error("Errore durante l'aggiunta del prodotto:", err);
     }
-    window.scrollTo(0, 0)
   };
 
   return (
     <Container className="my-4">
       <h2>Aggiungi Nuovo Prodotto</h2>
-      {isError && <Alert variant="danger">Errore: {error?.data?.message || "Impossibile aggiungere il prodotto."}</Alert>}
-      
+      {isError && (
+        <Alert variant="danger">
+          Errore: {error?.data?.message || "Impossibile aggiungere il prodotto."}
+        </Alert>
+      )}
+
       {/* Toast di successo */}
       <ToastContainer position="top-end" className="p-3">
         <Toast
@@ -100,115 +97,195 @@ const AddProduct = () => {
         </Toast>
       </ToastContainer>
 
-      <Form onSubmit={handleSubmit}>
-        {/* Campi principali del prodotto */}
-        <Form.Group className="mb-3">
-          <Form.Label>Titolo*</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Inserisci il titolo"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            isInvalid={!!errors.title}
-          />
-          <Form.Control.Feedback type="invalid">{errors.title}</Form.Control.Feedback>
-        </Form.Group>
+      <Formik
+        initialValues={{
+          title: "",
+          category: "",
+          price: "",
+          employee: "",
+          description: "",
+          reviewInput: "",
+        }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ values, handleChange, setFieldValue }) => (
+          <Form>
+            {/* Titolo */}
+            <div className="mb-3">
+              <label className="form-label">Titolo*</label>
+              <Field
+                name="title"
+                type="text"
+                className="form-control"
+                placeholder="Inserisci il titolo"
+              />
+              <div className="invalid-feedback d-block">
+                <ErrorMessage name="title" />
+              </div>
+            </div>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Categoria*</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Inserisci la categoria"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            isInvalid={!!errors.category}
-          />
-          <Form.Control.Feedback type="invalid">{errors.category}</Form.Control.Feedback>
-        </Form.Group>
+            {/* Categoria */}
+            <div className="mb-3">
+              <label className="form-label">Categoria*</label>
+              <Field
+                name="category"
+                type="text"
+                className="form-control"
+                placeholder="Inserisci la categoria"
+              />
+              <div className="invalid-feedback d-block">
+                <ErrorMessage name="category" />
+              </div>
+            </div>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Prezzo*</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Inserisci il prezzo"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            isInvalid={!!errors.price}
-          />
-          <Form.Control.Feedback type="invalid">{errors.price}</Form.Control.Feedback>
-        </Form.Group>
+            {/* Prezzo */}
+            <div className="mb-3">
+              <label className="form-label">Prezzo*</label>
+              <Field
+                name="price"
+                type="text"  // Usa 'text' per poter applicare una maschera personalizzata
+                className="form-control"
+                placeholder="Inserisci il prezzo"
+                onInput={(e) => {
+                  // Rimuove tutto tranne numeri, punto e virgola
+                  let value = e.target.value;
+                  value = value.replace(/[^\d,\.]/g, '') // Consente solo numeri e simboli di decimali
+                    .replace(/,/g, '.'); // Cambia la virgola in punto per il formato decimale
 
-        <Form.Group className="mb-3">
-          <Form.Label>Dipendente</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Inserisci il nome del dipendente"
-            value={employee}
-            onChange={(e) => setEmployee(e.target.value)}
-          />
-        </Form.Group>
+                  // Limita i decimali a due cifre
+                  if (value.indexOf('.') !== -1) {
+                    const [integer, decimals] = value.split('.');
+                    if (decimals.length > 2) {
+                      value = `${integer}.${decimals.substring(0, 2)}`;
+                    }
+                  }
 
-        <Form.Group className="mb-3">
-          <Form.Label>Descrizione</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            placeholder="Inserisci una descrizione"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </Form.Group>
+                  e.target.value = value;
+                }}
+              />
+              <div className="invalid-feedback d-block">
+                <ErrorMessage name="price" />
+              </div>
+            </div>
 
-        {/* Card per le recensioni */}
-        <Card className="mb-4">
-          <Card.Header>
-            <h5>Gestione Recensioni</h5>
-          </Card.Header>
-          <Card.Body>
-            <Row>
-              <Col sm={8}>
-                <Form.Control
-                  type="text"
-                  placeholder="Inserisci una recensione"
-                  value={reviewInput}
-                  onChange={(e) => setReviewInput(e.target.value)}
-                />
-              </Col>
-              <Col sm={4}>
-                <Button
-                  variant="primary"
-                  onClick={handleAddReview}
-                  disabled={!reviewInput.trim()}
-                >
-                  Aggiungi Recensione
-                </Button>
-              </Col>
-            </Row>
-            {/* Mostra le recensioni aggiunte */}
-            <ListGroup className="mt-3">
-              {reviews.map((review, index) => (
-                <ListGroup.Item
-                  key={index}
-                  className="d-flex justify-content-between align-items-center"
-                >
-                  {review}
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    onClick={() => handleDeleteReview(index)}
-                  >
-                    Elimina
-                  </Button>
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          </Card.Body>
-        </Card>
+            {/* Dipendente */}
+            <div className="mb-3">
+              <label className="form-label">Dipendente</label>
+              <Field
+                name="employee"
+                type="text"
+                className="form-control"
+                placeholder="Inserisci il nome del dipendente"
+              />
+              <div className="invalid-feedback d-block">
+                <ErrorMessage name="employee" />
+              </div>
+            </div>
 
-        <Button variant="primary" type="submit" disabled={isLoading}>
-          {isLoading ? "Aggiungendo..." : "Aggiungi Prodotto"}
-        </Button>
-      </Form>
+            {/* Descrizione */}
+            <div className="mb-3">
+              <label className="form-label">Descrizione</label>
+              <Field
+                name="description"
+                as="textarea"
+                rows="3"
+                className="form-control"
+                placeholder="Inserisci una descrizione"
+              />
+              <div className="invalid-feedback d-block">
+                <ErrorMessage name="description" />
+              </div>
+            </div>
+
+            {/* Recensioni */}
+            <Card className="mb-4">
+              <Card.Header>
+                <h5>Gestione Recensioni</h5>
+              </Card.Header>
+              <Card.Body>
+                <Row>
+                  <Col sm={8}>
+                    <Field
+                      name="reviewInput"
+                      type="text"
+                      className="form-control"
+                      placeholder="Inserisci una recensione"
+                      value={values.reviewInput}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                  <Col sm={4}>
+                    <Button
+                      variant="primary"
+                      className="my-2"
+                      onClick={() =>
+                        handleAddReview(values.reviewInput, setFieldValue)
+                      }
+                      disabled={!values.reviewInput.trim()}
+                    >
+                      Aggiungi Recensione
+                    </Button>
+                  </Col>
+                </Row>
+
+                {/* Mostra le recensioni con paginazione */}
+                <ListGroup className="mt-3">
+                  {paginatedReviews.map((review, index) => (
+                    <ListGroup.Item
+                      key={index + (currentPage - 1) * reviewsPerPage}
+                      className="d-flex justify-content-between align-items-center"
+                    >
+                      {review}
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() =>
+                          handleDeleteReview(index + (currentPage - 1) * reviewsPerPage)
+                        }
+                      >
+                        <i className="bi bi-trash"></i>
+                      </Button>
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+
+                {/* Paginazione */}
+                {reviews.length > reviewsPerPage && (
+                  <Pagination className="mt-3 justify-content-center">
+                    <Pagination.Prev
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                    />
+                    {Array.from({
+                      length: Math.ceil(reviews.length / reviewsPerPage),
+                    }).map((_, index) => (
+                      <Pagination.Item
+                        key={index + 1}
+                        active={currentPage === index + 1}
+                        onClick={() => handlePageChange(index + 1)}
+                      >
+                        {index + 1}
+                      </Pagination.Item>
+                    ))}
+                    <Pagination.Next
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={
+                        currentPage === Math.ceil(reviews.length / reviewsPerPage)
+                      }
+                    />
+                  </Pagination>
+                )}
+              </Card.Body>
+            </Card>
+
+            {/* Submit */}
+            <Button variant="primary" type="submit" disabled={isLoading}>
+              {isLoading ? "Aggiungendo..." : "Aggiungi Prodotto"}
+            </Button>
+          </Form>
+        )}
+      </Formik>
     </Container>
   );
 };

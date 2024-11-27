@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Spinner, Pagination, Card, Row, Col, Container, Toast, ToastContainer } from "react-bootstrap";
 import { useDeleteProductMutation, useGetProductsQuery } from "../features/products/productsApi";
 import CustomModal from "../components/CustomModal";
+import TruncatedText from "../components/TruncatedText"; // Importa il nuovo componente
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 const Products = () => {
@@ -51,22 +52,22 @@ const Products = () => {
 
   // Dinamicamente impostiamo contenuti e footer per il CustomModal
   const modalContent =
-    modalType === "reviews" ? (
-      selectedReviews?.length > 0 ? (
-        <ul>
-          {selectedReviews.map((review, index) => (
-            <li key={index}>{review}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>Nessuna recensione disponibile.</p>
-      )
+  modalType === "reviews" ? (
+    selectedReviews?.length > 0 ? (
+      <ul>
+        {selectedReviews.map((review, index) => (
+          <li key={index}>{review}</li>
+        ))}
+      </ul>
     ) : (
-      <p>
-        Sei sicuro di voler eliminare <strong>{selectedProduct?.data.title}</strong>?
-      </p>
-    );
-
+      <p>Nessuna recensione disponibile.</p>
+    )
+  ) : (
+    <p>
+      Sei sicuro di voler eliminare <strong>{selectedProduct?.data.title}</strong>?
+    </p>
+  );
+  
   const modalFooter =
     modalType === "reviews" ? null : (
       <>
@@ -92,29 +93,36 @@ const Products = () => {
         {data?.list.map((product) => (
           <Col
             className="p-2"
-            key={product.data.id}
-            xs={layout === "grid" ? 12 : 12}
+            key={product?.id}
+            xs={layout === "grid" ? 6 : 12} // 2 elementi per riga su mobile in griglia, 1 per riga in lista
             sm={layout === "grid" ? 6 : 12}
-            md={layout === "grid" ? 4 : 12}
+            md={layout === "grid" ? 4 : 12} // Configurazione responsive per griglia
+            lg={layout === "grid" ? 4 : 12}
+            xl={layout === "grid" ? 4 : 12}
           >
-            <Card className="h-100">
-              <Card.Body>
-                <Card.Title>{product.data.title}</Card.Title>
+            <Card className="h-100 d-flex flex-column">
+              <Card.Body className="d-flex flex-column">
+                <Card.Title>
+                  <TruncatedText text={product.data.title} />
+                </Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
-                  Categoria: {product.data.category}
+                  Categoria: <TruncatedText text={product.data.category} />
                 </Card.Subtitle>
                 <Card.Text>
                   <strong>Prezzo:</strong> €{product.data.price}
                   <br />
-                  <strong>Dipendente:</strong> {product.data.employee}
+                  <strong>Dipendente:</strong>{" "}
+                  <TruncatedText text={product.data.employee || "Non specificato"} />
                   <br />
-                  <strong>Descrizione:</strong> {product.data.description}
+                  <strong>Descrizione:</strong>{" "}
+                  <TruncatedText text={product.data.description || "Nessuna descrizione disponibile"} />
                 </Card.Text>
                 <div className="d-flex justify-content-between">
                   <OverlayTrigger
                     placement="top"
                     overlay={
-                      product?.data.reviews.length === 0 || (product?.data.reviews.length === 1 && product?.data.reviews[0] === "") ? (
+                      product?.data.reviews.length === 0 ||
+                      (product?.data.reviews.length === 1 && product?.data.reviews[0] === "") ? (
                         <Tooltip id={`tooltip-${product?.data.id}`}>
                           Nessuna recensione disponibile.
                         </Tooltip>
@@ -128,7 +136,12 @@ const Products = () => {
                         variant="primary"
                         onClick={() => handleShowReviews(product?.data.reviews)}
                         disabled={product?.data.reviews.length === 0 || (product?.data.reviews.length === 1 && product?.data.reviews[0] === "")}
-                        style={product?.data.reviews.length === 0 || (product?.data.reviews.length === 1 && product?.data.reviews[0] === "") ? { pointerEvents: "none" } : {}}
+                        style={
+                          product?.data.reviews.length === 0 ||
+                          (product?.data.reviews.length === 1 && product?.data.reviews[0] === "")
+                            ? { pointerEvents: "none" }
+                            : {}
+                        }
                       >
                         <i className="bi bi-search"></i>
                       </Button>

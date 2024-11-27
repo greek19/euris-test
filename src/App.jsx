@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Products from './pages/Products';
 import Layout from './components/Layout';
 import AddProduct from './pages/AddProduct';
+import CategoryChart from './pages/CategoryChart';
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/add-product" element={<AddProduct />} />
+        <Route path='/chart' element={<CategoryChart />} />
       </Routes>
     </Layout>
   );

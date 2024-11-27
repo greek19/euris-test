@@ -21,7 +21,10 @@ export const productsApi = createApi({
         method: 'DELETE',
       }),
     }),
+    getCategoriesStats: builder.query({
+      query: () => '/stats/categories', // Query per ottenere la statistica delle categorie
+    }),
   }),
 });
 
-export const { useGetProductsQuery, useAddProductMutation, useDeleteProductMutation } = productsApi;
+export const { useGetProductsQuery, useAddProductMutation, useDeleteProductMutation, useGetCategoriesStatsQuery } = productsApi;

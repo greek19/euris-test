@@ -26,6 +26,10 @@ const Header = () => {
                 Nuovo Prodotto
               </NavDropdown.Item>
             </NavDropdown>
+
+            <Nav.Link as={Link} to="/chart">
+              Chart
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
