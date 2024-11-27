@@ -67,7 +67,7 @@ const Products = () => {
       Sei sicuro di voler eliminare <strong>{selectedProduct?.data.title}</strong>?
     </p>
   );
-  
+
   const modalFooter =
     modalType === "reviews" ? null : (
       <>
@@ -117,7 +117,7 @@ const Products = () => {
                   <strong>Descrizione:</strong>{" "}
                   <TruncatedText text={product.data.description || "Nessuna descrizione disponibile"} />
                 </Card.Text>
-                <div className="d-flex justify-content-between">
+                <div className="mt-auto d-flex justify-content-between">
                   <OverlayTrigger
                     placement="top"
                     overlay={

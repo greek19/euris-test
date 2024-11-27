@@ -218,7 +218,6 @@ const AddProduct = () => {
                   <Col sm={4}>
                     <Button
                       variant="primary"
-                      className="my-2"
                       onClick={() =>
                         handleAddReview(values.reviewInput, setFieldValue)
                       }

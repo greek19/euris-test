@@ -10,6 +10,7 @@ import {
   CategoryScale,
   RadialLinearScale, // Importa la scala radialLinear
 } from 'chart.js';
+import { Container } from 'react-bootstrap';
 
 // Registrazione degli elementi necessari per il grafico
 ChartJS.register(
@@ -26,11 +27,11 @@ const CategoryChart = () => {
 
   // Prepara i dati per il grafico PolarArea
   const chartData = {
-    labels: data ? data.map(item => item.category) : [], // Le categorie
+    labels: data ? data.map(item => item.category) : [], 
     datasets: [
       {
         label: 'Prodotti per Categoria',
-        data: data ? data.map(item => item.numberOfProducts) : [], // Numero di prodotti per ogni categoria
+        data: data ? data.map(item => item.numberOfProducts) : [], 
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -59,7 +60,9 @@ const CategoryChart = () => {
   return (
     <div>
       <h2>Prodotti per Categoria</h2>
-      <PolarArea data={chartData} options={{ responsive: true }} />
+      <Container>
+        <PolarArea data={chartData} options={{ responsive: true }} />
+      </Container>
     </div>
   );
 };
