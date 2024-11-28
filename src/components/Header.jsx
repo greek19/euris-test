@@ -47,7 +47,7 @@ const Header = () => {
             <>
               <span className="navbar-text text-white">Ciao, {user.username}</span>
               <Button variant="outline-light" onClick={handleLogout} className="ms-2">
-                Logout
+                <i className="bi bi-box-arrow-right"></i> Logout
               </Button>
             </>
           ) : (

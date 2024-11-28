@@ -5,24 +5,20 @@ import { useSelector } from 'react-redux';
 
 const Home = () => {
   // Ottieni l'utente dalla sessione o dallo store Redux
-  const user = useSelector((state) => state.user); // Supponiamo che il tuo stato Redux abbia un campo 'user'
+  const user = useSelector((state) => state.auth.user); 
 
   return (
     <Container>
       <Row className="my-4">
-        <Col>
+        <Col className="p-2">
           {/* Benvenuto personalizzato */}
           <Card>
             <Card.Body>
               <Card.Title>
-                {user ? `Benvenuto, ${user.username}!` : 'Benvenuto nella nostra App!'}
+                Benvenuto, {user?.username}!
               </Card.Title>
               <Card.Text>
-                {user ? (
-                  `Ciao ${user.username}, esplora le funzionalità della nostra applicazione!`
-                ) : (
-                  'Esplora i prodotti e i servizi disponibili nel nostro sistema.'
-                )}
+                Ciao {user.username}, esplora le funzionalità dell'app utilizzando i link nelle card in basso!
               </Card.Text>
             </Card.Body>
           </Card>
@@ -71,7 +67,7 @@ const Home = () => {
                 Personalizza le impostazioni dell'account.
               </Card.Text>
               <div className="mt-auto">
-                <Button variant="primary" as={Link} to="/settings" >
+                <Button variant="primary" disabled>
                   Vai alle Impostazioni
                 </Button>
               </div>
