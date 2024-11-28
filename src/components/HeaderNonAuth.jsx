@@ -2,11 +2,11 @@ import React from 'react';
 import { Navbar, Nav, Container, NavDropdown, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout, selectIsAuthenticated, selectUser } from '../features/auth/authSlice';
+import { logout} from '../features/auth/authSlice';
 
 const HeaderNonAuth = () => {
-  const user = useSelector(selectUser);
-  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const user = useSelector((state)=> state.user);
+  const isAuthenticated = useSelector((state)=> state.isAuthenticated);
   const dispatch = useDispatch();
 
   const handleLogout = () => {

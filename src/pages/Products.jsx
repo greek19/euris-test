@@ -57,7 +57,11 @@ const Products = () => {
     selectedReviews?.length > 0 ? (
       <ul>
         {selectedReviews.map((review, index) => (
-          <li key={index}>{review}</li>
+          <li key={index}>
+            <div className="flex-grow-1 text-break me-3">
+              {review}
+            </div>
+          </li>
         ))}
       </ul>
     ) : (
@@ -84,7 +88,7 @@ const Products = () => {
   return (
     <Container>
       <div className="row d-flex justify-content-between align-items-center mb-3">
-        <h2 className="col-auto mb-0 ">Products</h2>
+        <h2 className="col-auto mb-0 ">Lista Prodotti</h2>
         <Button variant="primary" onClick={toggleLayout} className="col-auto mx-2">
           {layout === "panel" ? <FaList /> : <FaTh />}
         </Button>

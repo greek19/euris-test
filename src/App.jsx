@@ -7,10 +7,9 @@ import AddProduct from './pages/AddProduct';
 import CategoryChart from './pages/CategoryChart';
 import Login from './pages/Login';
 import { useSelector } from 'react-redux';
-import { selectIsAuthenticated } from './features/auth/authSlice';
 
 const App = () => {
-  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const isAuthenticated = useSelector((state)=> state.isAuthenticated);
 
   return (
     <Layout>

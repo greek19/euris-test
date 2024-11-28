@@ -3,11 +3,10 @@ import Header from './Header';
 import Footer from './Footer';
 import { Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { selectIsAuthenticated } from '../features/auth/authSlice';
 import HeaderNonAuth from './HeaderNonAuth';
 
 const Layout = ({ children }) => {
-  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const isAuthenticated = useSelector((state)=> state.isAuthenticated);
 
   return (
     <div className="d-flex flex-column min-vh-100">

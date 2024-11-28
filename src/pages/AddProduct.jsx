@@ -15,7 +15,6 @@ import {
 } from "react-bootstrap";
 import { useAddProductMutation } from "../features/products/productsApi";
 import { useSelector } from "react-redux";
-import { selectUser } from "../features/auth/authSlice";
 
 const AddProduct = () => {
   const [reviews, setReviews] = React.useState([]);
@@ -23,7 +22,7 @@ const AddProduct = () => {
   const [showToast, setShowToast] = React.useState(false);
   const reviewsPerPage = 10;
   const [addProduct, { isLoading, isError, error }] = useAddProductMutation();
-  const user = useSelector(selectUser)
+  const user = useSelector((state)=> state.users)
 
   const handlePageChange = (page) => setCurrentPage(page);
 
@@ -77,7 +76,7 @@ const AddProduct = () => {
 
   return (
     <Container className="my-4">
-      <h2>Aggiungi Nuovo Prodotto</h2>
+      <h2 className="pb-4">Aggiungi Nuovo Prodotto</h2>
       {isError && (
         <Alert variant="danger">
           Errore: {error?.data?.message || "Impossibile aggiungere il prodotto."}
@@ -116,7 +115,7 @@ const AddProduct = () => {
           <Form>
             {/* Titolo */}
             <div className="mb-3">
-              <label className="form-label">Titolo*</label>
+              <label className="form-label fw-bold">Titolo*</label>
               <Field
                 name="title"
                 type="text"
@@ -130,7 +129,7 @@ const AddProduct = () => {
 
             {/* Categoria */}
             <div className="mb-3">
-              <label className="form-label">Categoria*</label>
+              <label className="form-label fw-bold">Categoria*</label>
               <Field
                 name="category"
                 type="text"
@@ -144,7 +143,7 @@ const AddProduct = () => {
 
             {/* Prezzo */}
             <div className="mb-3">
-              <label className="form-label">Prezzo*</label>
+              <label className="form-label fw-bold">Prezzo*</label>
               <Field
                 name="price"
                 type="text"  // Usa 'text' per poter applicare una maschera personalizzata
@@ -174,7 +173,7 @@ const AddProduct = () => {
 
             {/* Dipendente */}
             <div className="mb-3">
-              <label className="form-label">Dipendente</label>
+              <label className="form-label fw-bold">Dipendente</label>
               <Field
                 name="employee"
                 type="text"
@@ -188,7 +187,7 @@ const AddProduct = () => {
 
             {/* Descrizione */}
             <div className="mb-3">
-              <label className="form-label">Descrizione</label>
+              <label className="form-label fw-bold">Descrizione</label>
               <Field
                 name="description"
                 as="textarea"
@@ -204,10 +203,10 @@ const AddProduct = () => {
             {/* Recensioni */}
             <Card className="mb-4">
               <Card.Header>
-                <h5>Gestione Recensioni</h5>
+                <h5>Recensioni</h5>
               </Card.Header>
               <Card.Body>
-                <Row>
+                <Row className="g-3">
                   <Col sm={8}>
                     <Field
                       name="reviewInput"
@@ -218,7 +217,7 @@ const AddProduct = () => {
                       onChange={handleChange}
                     />
                   </Col>
-                  <Col sm={4}>
+                  <Col sm={4} >
                     <Button
                       variant="primary"
                       onClick={() =>
@@ -238,9 +237,11 @@ const AddProduct = () => {
                       key={index + (currentPage - 1) * reviewsPerPage}
                       className="d-flex justify-content-between align-items-center"
                     >
-                      {review}
+                      <div className="flex-grow-1 text-break me-3">
+                        {review}
+                      </div>
                       <Button
-                        variant="danger"
+                        variant="outline-danger"
                         size="sm"
                         onClick={() =>
                           handleDeleteReview(index + (currentPage - 1) * reviewsPerPage)
