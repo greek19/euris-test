@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import HeaderNonAuth from './HeaderNonAuth';
 
 const Layout = ({ children }) => {
-  const isAuthenticated = useSelector((state)=> state.isAuthenticated);
+  const isAuthenticated = useSelector((state)=> state.auth.isAuthenticated);
 
   return (
     <div className="d-flex flex-column min-vh-100">

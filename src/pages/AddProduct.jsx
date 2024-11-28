@@ -22,7 +22,7 @@ const AddProduct = () => {
   const [showToast, setShowToast] = React.useState(false);
   const reviewsPerPage = 10;
   const [addProduct, { isLoading, isError, error }] = useAddProductMutation();
-  const user = useSelector((state)=> state.users)
+  const user = useSelector((state)=> state.auth.user)
 
   const handlePageChange = (page) => setCurrentPage(page);
 

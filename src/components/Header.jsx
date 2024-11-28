@@ -6,8 +6,8 @@ import { logout } from '../features/auth/authSlice';
 import logo from '../assets/favicon.png'; 
 
 const Header = () => {
-  const user = useSelector((state)=> state.isAuthenticated.user);
-  const isAuthenticated = useSelector((state)=> state.isAuthenticated);
+  const user = useSelector((state)=> state.auth.user);
+  const isAuthenticated = useSelector((state)=> state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
   const handleLogout = () => {

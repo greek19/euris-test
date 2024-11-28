@@ -9,7 +9,7 @@ import Login from './pages/Login';
 import { useSelector } from 'react-redux';
 
 const App = () => {
-  const isAuthenticated = useSelector((state)=> state.isAuthenticated);
+  const isAuthenticated = useSelector((state)=> state.auth.isAuthenticated);
 
   return (
     <Layout>

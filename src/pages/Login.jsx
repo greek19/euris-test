@@ -1,4 +1,3 @@
-// src/pages/Login.js
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../features/auth/authSlice';
@@ -15,6 +14,12 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+
+    // Controlla che username e password siano stati inseriti
+    if (!username.trim() || !password.trim()) {
+      setError('Username e Password sono obbligatori.');0
+      return;
+    }
 
     // Verifica delle credenziali contro gli utenti mock
     const user = MOCK_USERS.find(
