@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Button, Spinner, Pagination, Card, Row, Col, Container, Toast, ToastContainer } from "react-bootstrap";
+import { Spinner, Container, Button, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import { useDeleteProductMutation, useGetProductsQuery } from "../features/products/productsApi";
 import CustomModal from "../components/CustomModal";
-import TruncatedText from "../components/TruncatedText"; // Importa il nuovo componente
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { FaTh, FaList } from 'react-icons/fa'; // Import delle icone
+import ProductCard from "../components/ProductCard";
+import PaginationComponent from "../components/PaginationComponent"; // Importa il componente di paginazione
+import { FaTh, FaList } from 'react-icons/fa'; // Importa le icone per la griglia e la lista
 
 const Products = () => {
-  const [layout, setLayout] = useState("panel"); // 'panel' o 'grid'
+  const [layout, setLayout] = useState("panel"); // "panel" per lista, "grid" per griglia
   const [page, setPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
@@ -17,7 +17,6 @@ const Products = () => {
 
   const elements = 9; // Numero di elementi per pagina
 
-  // Recupera i prodotti
   const { data, error, isLoading, refetch } = useGetProductsQuery({ page, elements });
   const [deleteProduct] = useDeleteProductMutation();
 
@@ -34,7 +33,7 @@ const Products = () => {
     }
   };
 
-  const toggleLayout = () => setLayout((prev) => (prev === "panel" ? "grid" : "panel"));
+  const toggleLayout = () => setLayout((prev) => (prev === "panel" ? "grid" : "panel")); // Cambia il layout tra "panel" e "grid"
 
   const handleShowReviews = (reviews) => {
     setSelectedReviews(reviews);
@@ -51,27 +50,22 @@ const Products = () => {
   if (isLoading) return <Spinner animation="border" />;
   if (error) return <p className="text-danger">Errore nel caricamento dei prodotti!</p>;
 
-  // Dinamicamente impostiamo contenuti e footer per il CustomModal
   const modalContent =
-  modalType === "reviews" ? (
-    selectedReviews?.length > 0 ? (
-      <ul>
-        {selectedReviews.map((review, index) => (
-          <li key={index}>
-            <div className="flex-grow-1 text-break me-3">
-              {review}
-            </div>
-          </li>
-        ))}
-      </ul>
+    modalType === "reviews" ? (
+      selectedReviews?.length > 0 ? (
+        <ul>
+          {selectedReviews.map((review, index) => (
+            <li key={index}>{review}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>Nessuna recensione disponibile.</p>
+      )
     ) : (
-      <p>Nessuna recensione disponibile.</p>
-    )
-  ) : (
-    <p>
-      Sei sicuro di voler eliminare <strong>{selectedProduct?.data.title}</strong>?
-    </p>
-  );
+      <p>
+        Sei sicuro di voler eliminare <strong>{selectedProduct?.data.title}</strong>?
+      </p>
+    );
 
   const modalFooter =
     modalType === "reviews" ? null : (
@@ -88,104 +82,41 @@ const Products = () => {
   return (
     <Container>
       <div className="row d-flex justify-content-between align-items-center mb-3">
-        <h2 className="col-auto mb-0 ">Lista Prodotti</h2>
+        <h2 className="col-auto mb-0">Lista Prodotti</h2>
         <Button variant="primary" onClick={toggleLayout} className="col-auto mx-2">
           {layout === "panel" ? <FaList /> : <FaTh />}
         </Button>
       </div>
 
+      {/* Mostra le card in modalità griglia o lista */}
       <Row className={layout === "grid" ? "g-4" : ""}>
         {data?.list.map((product) => (
           <Col
-            className="p-2"
             key={product?.id}
-            xs={layout === "grid" ? 6 : 12} // 2 elementi per riga su mobile in griglia, 1 per riga in lista
+            xs={layout === "grid" ? 6 : 12} // 2 card per riga in griglia, una card per riga in lista
             sm={layout === "grid" ? 6 : 12}
-            md={layout === "grid" ? 4 : 12} // Configurazione responsive per griglia
+            md={layout === "grid" ? 4 : 12} // Griglia 3 colonne per schermi medi, 1 colonna per lista
             lg={layout === "grid" ? 4 : 12}
             xl={layout === "grid" ? 4 : 12}
           >
-            <Card className="h-100 d-flex flex-column">
-              <Card.Body className="d-flex flex-column">
-                <Card.Title>
-                  <TruncatedText text={product.data.title} />
-                </Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  Categoria: <TruncatedText text={product.data.category} />
-                </Card.Subtitle>
-                <Card.Text>
-                  <strong>Prezzo:</strong> €{product.data.price}
-                  <br />
-                  <strong>Dipendente:</strong>{" "}
-                  <TruncatedText text={product.data.employee || "Non specificato"} />
-                  <br />
-                  <strong>Descrizione:</strong>{" "}
-                  <TruncatedText text={product.data.description || "Nessuna descrizione disponibile"} />
-                </Card.Text>
-                <div className="mt-auto d-flex justify-content-between">
-                  <OverlayTrigger
-                    placement="top"
-                    overlay={
-                      product?.data.reviews.length === 0 ||
-                      (product?.data.reviews.length === 1 && product?.data.reviews[0] === "") ? (
-                        <Tooltip id={`tooltip-${product?.data.id}`}>
-                          Nessuna recensione disponibile.
-                        </Tooltip>
-                      ) : (
-                        <></>
-                      )
-                    }
-                  >
-                    <span className="d-inline-block">
-                      <Button
-                        variant="primary"
-                        onClick={() => handleShowReviews(product?.data.reviews)}
-                        disabled={product?.data.reviews.length === 0 || (product?.data.reviews.length === 1 && product?.data.reviews[0] === "")}
-                        style={
-                          product?.data.reviews.length === 0 ||
-                          (product?.data.reviews.length === 1 && product?.data.reviews[0] === "")
-                            ? { pointerEvents: "none" }
-                            : {}
-                        }
-                      >
-                        <i className="bi bi-search"></i>
-                      </Button>
-                    </span>
-                  </OverlayTrigger>
-
-                  <Button variant="outline-danger" onClick={() => handleShowDelete(product)}>
-                    <i className="bi bi-trash"></i>
-                  </Button>
-                </div>
-              </Card.Body>
-            </Card>
+            <ProductCard
+              product={product}
+              onShowReviews={handleShowReviews}
+              onShowDelete={handleShowDelete}
+            />
           </Col>
         ))}
       </Row>
 
-      <div className="d-flex justify-content-center mt-4">
-        <Pagination>
-          <Pagination.Prev
-            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-            disabled={page === 1}
-          />
-          {Array.from({ length: Math.ceil(data?.length / elements) }).map((_, index) => (
-            <Pagination.Item
-              key={index + 1}
-              active={index + 1 === page}
-              onClick={() => setPage(index + 1)}
-            >
-              {index + 1}
-            </Pagination.Item>
-          ))}
-          <Pagination.Next
-            onClick={() => setPage((prev) => Math.min(prev + 1, Math.ceil(data?.length / elements)))}
-            disabled={page === Math.ceil(data?.length / elements)}
-          />
-        </Pagination>
-      </div>
+      {/* Componente di Paginazione */}
+      <PaginationComponent
+        page={page}
+        setPage={setPage}
+        totalItems={data?.length || 0}
+        itemsPerPage={elements}
+      />
 
-      {/* Modale unica con contenuti dinamici */}
+      {/* Modale per le recensioni o la conferma eliminazione */}
       <CustomModal
         show={showModal}
         onHide={() => setShowModal(false)}
@@ -202,12 +133,12 @@ const Products = () => {
           show={showToast}
           delay={3000}
           autohide
-          bg="success"
+          bg="dark"
         >
           <Toast.Header>
             <strong className="me-auto">Notifica</strong>
           </Toast.Header>
-          <Toast.Body>Prodotto eliminato con successo!</Toast.Body>
+          <Toast.Body className="text-white">Prodotto eliminato con successo!</Toast.Body>
         </Toast>
       </ToastContainer>
     </Container>

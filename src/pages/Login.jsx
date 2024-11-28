@@ -3,7 +3,9 @@ import { useDispatch } from 'react-redux';
 import { login } from '../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Alert } from 'react-bootstrap';
-import { MOCK_USERS } from '../utility/constants'; // Importa gli utenti mock
+import { ERROR_MESSAGES_LOGIN, MOCK_USERS } from '../utility/constants'; // Importa utenti mock
+
+const ErrorAlert = ({ error }) => (error ? <Alert variant="danger">{error}</Alert> : null);
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -12,32 +14,42 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    if (id === 'username') setUsername(value);
+    if (id === 'password') setPassword(value);
+  };
+
+  const validateInputs = () => {
+    if (!username.trim() || !password.trim()) {
+      setError(ERROR_MESSAGES_LOGIN.required);
+      return false;
+    }
+    return true;
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Controlla che username e password siano stati inseriti
-    if (!username.trim() || !password.trim()) {
-      setError('Username e Password sono obbligatori.');0
-      return;
-    }
+    if (!validateInputs()) return;
 
-    // Verifica delle credenziali contro gli utenti mock
-    const user = MOCK_USERS.find(
+    // Verifica delle credenziali
+    const isValidUser = MOCK_USERS.some(
       (u) => u.username === username && u.password === password
     );
 
-    if (user) {
-      dispatch(login({ username })); // Salva l'utente loggato in Redux
+    if (isValidUser) {
+      dispatch(login({ username })); // Salva l'utente in Redux
       navigate('/'); // Reindirizza alla home
     } else {
-      setError('Credenziali non valide. Riprova.');
+      setError(ERROR_MESSAGES_LOGIN.invalid);
     }
   };
 
   return (
     <div>
       <h2>Login</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
+      <ErrorAlert error={error} />
       <Form onSubmit={handleLogin}>
         <Form.Group controlId="username">
           <Form.Label>Username</Form.Label>
@@ -45,7 +57,7 @@ const Login = () => {
             type="text"
             placeholder="Inserisci il tuo username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleChange}
           />
         </Form.Group>
 
@@ -55,7 +67,7 @@ const Login = () => {
             type="password"
             placeholder="Inserisci la tua password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleChange}
           />
         </Form.Group>
 

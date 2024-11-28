@@ -1,23 +1,15 @@
 import React from 'react';
-import { Navbar, Nav, Container, NavDropdown, Button } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { logout} from '../features/auth/authSlice';
-import logo from '../assets/favicon.png'
+import logo from '../../assets/favicon.png'
+import { LOGIN, ROOT } from '../../utility/routesConstants';
 
 const HeaderNonAuth = () => {
-  const user = useSelector((state)=> state.user);
-  const isAuthenticated = useSelector((state)=> state.auth.isAuthenticated);
-  const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    dispatch(logout()); 
-  };
-
+ 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
-      <Navbar.Brand as={Link} to="/">
+      <Navbar.Brand as={Link} to={ROOT}>
           <img
             src={logo} // Utilizza il logo importato
             alt="My App"
@@ -27,7 +19,7 @@ const HeaderNonAuth = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Link to="/login" className="nav-link text-white">Login</Link>
+            <Link to={LOGIN} className="nav-link text-white">Login</Link>
         </Nav>
         </Navbar.Collapse>
       </Container>

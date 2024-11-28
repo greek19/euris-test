@@ -2,8 +2,9 @@ import React from 'react';
 import { Navbar, Nav, Container, NavDropdown, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout } from '../features/auth/authSlice';
-import logo from '../assets/favicon.png'; 
+import { logout } from '../../features/auth/authSlice';
+import logo from '../../assets/favicon.png'; 
+import { ADD_PRODUCTS, CHART, LOGIN, PRODUCTS, ROOT } from '../../utility/routesConstants';
 
 const Header = () => {
   const user = useSelector((state)=> state.auth.user);
@@ -17,7 +18,7 @@ const Header = () => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand as={Link} to={ROOT}>
           <img
             src={logo} // Utilizza il logo importato
             alt="My App"
@@ -29,22 +30,22 @@ const Header = () => {
           <Nav className="me-auto">
 
             {/* Altri link se necessari */}
-            <Nav.Link as={Link} to="/">
+            <Nav.Link as={Link} to={ROOT}>
               Home
             </Nav.Link>
             {/* Dropdown per il menu Prodotti */}
             <NavDropdown title="Prodotti" id="products-dropdown">
               {/* Link per la lista dei prodotti */}
-              <NavDropdown.Item as={Link} to="/products">
+              <NavDropdown.Item as={Link} to={PRODUCTS}>
                 Lista Prodotti
               </NavDropdown.Item>
               {/* Link per aggiungere un nuovo prodotto */}
-              <NavDropdown.Item as={Link} to="/add-product">
+              <NavDropdown.Item as={Link} to={ADD_PRODUCTS}>
                 Nuovo Prodotto
               </NavDropdown.Item>
             </NavDropdown>
 
-            <Nav.Link as={Link} to="/chart">
+            <Nav.Link as={Link} to={CHART}>
               Statistiche
             </Nav.Link>
           </Nav>
@@ -60,7 +61,7 @@ const Header = () => {
               </Button>
             </>
           ) : (
-            <Link to="/login" className="nav-link text-white">Login</Link>
+            <Link to={LOGIN} className="nav-link text-white">Login</Link>
           )}
         </Nav>
         </Navbar.Collapse>

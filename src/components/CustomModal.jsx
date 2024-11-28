@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 const CustomModal = ({ show, onHide, title, children, footer }) => {
   return (
@@ -7,7 +7,7 @@ const CustomModal = ({ show, onHide, title, children, footer }) => {
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body style={{ maxHeight: "400px", overflowY: "auto" }}>
+      <Modal.Body className="modal-scrollable text-break">
         {children}
       </Modal.Body>
       <Modal.Footer>{footer}</Modal.Footer>

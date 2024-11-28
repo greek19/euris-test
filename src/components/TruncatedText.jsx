@@ -1,24 +1,24 @@
 import React from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-const TruncatedText = ({ text, maxLength = 200 }) => {
-  // Se il testo è più corto del limite, lo mostriamo direttamente
-  if (text.length <= maxLength) {
-    return <span>{text}</span>;
-  }
-
-  // Testo troncato
-  const truncated = text.slice(0, maxLength) + "...";
+const TruncatedText = ({ text, maxLength = 100 }) => {
+  // Verifica se il testo necessita di troncamento
+  const isTruncated = text.length > maxLength;
+  const displayedText = isTruncated ? `${text.slice(0, maxLength)}...` : text;
 
   return (
-    <OverlayTrigger
-      placement="top"
-      overlay={<Tooltip>{text}</Tooltip>}
-    >
-      <span style={{ cursor: "pointer"}}>
-        {truncated}
-      </span>
-    </OverlayTrigger>
+    isTruncated ? (
+      <OverlayTrigger
+        placement="top"
+        overlay={<Tooltip>{text}</Tooltip>}
+      >
+        <span className="text-truncate d-inline-block w-100" >
+          {displayedText}
+        </span>
+      </OverlayTrigger>
+    ) : (
+      <span>{text}</span>
+    )
   );
 };
 

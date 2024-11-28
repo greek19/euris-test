@@ -2,23 +2,22 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Products from './pages/Products';
-import Layout from './components/Layout';
+import Layout from './components/layout/Layout';
 import AddProduct from './pages/AddProduct';
 import CategoryChart from './pages/CategoryChart';
 import Login from './pages/Login';
-import { useSelector } from 'react-redux';
+import PrivateRoute from './components/PrivateRoute'; // Importa PrivateRoute
+import { ADD_PRODUCTS, CHART, LOGIN, PRODUCTS, ROOT } from './utility/routesConstants';
 
 const App = () => {
-  const isAuthenticated = useSelector((state)=> state.auth.isAuthenticated);
-
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={isAuthenticated ? <Home /> : <Login />} />
-        <Route path="/login" element={isAuthenticated ? <Home /> : <Login />} />
-        <Route path="/products" element={isAuthenticated ? <Products /> : <Login />} />
-        <Route path="/add-product" element={isAuthenticated ? <AddProduct /> : <Login />} />
-        <Route path='/chart' element={isAuthenticated ?<CategoryChart /> : <Login />} />
+        <Route path={ROOT} element={<PrivateRoute><Home /></PrivateRoute>} />
+        <Route path={LOGIN} element={<Login />} />
+        <Route path={PRODUCTS} element={<PrivateRoute><Products /></PrivateRoute>} />
+        <Route path={ADD_PRODUCTS} element={<PrivateRoute><AddProduct /></PrivateRoute>} />
+        <Route path={CHART} element={<PrivateRoute><CategoryChart /></PrivateRoute>} />
       </Routes>
     </Layout>
   );

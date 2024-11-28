@@ -1,9 +1,9 @@
 import React from 'react';
-import Header from './layout/Header';
-import Footer from './layout/Footer';
+import Header from './Header';
+import Footer from './Footer';
 import { Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import HeaderNonAuth from './layout/HeaderNonAuth';
+import HeaderNonAuth from './HeaderNonAuth';
 
 const Layout = ({ children }) => {
   const isAuthenticated = useSelector((state)=> state.auth.isAuthenticated);

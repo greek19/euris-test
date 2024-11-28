@@ -1,9 +1,8 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { productsApi } from '../features/products/productsApi';
+import { productsApi } from './products/productsApi';
 import storage from 'redux-persist/lib/storage';
 import { persistStore, persistReducer } from 'redux-persist';
-import authReducer from '../features/auth/authSlice'; 
-// import {  } from 'redux';
+import authReducer from './auth/authSlice'; 
 
 // Configurazione di redux-persist
 const persistConfig = {
