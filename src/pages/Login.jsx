@@ -72,16 +72,19 @@ const Login = () => {
           />
         </Form.Group>
 
-        <div className="row justify-content-between">
-          <div className="col-2">
-            <Button variant="primary" type="submit" className="mt-3" id="button-login">
+        <div className="row justify-content-between text-break">
+          <div className="col-12 col-md-5">
+            <Button variant="primary" type="submit" className="mt-3 w-100" id="button-login">
               Login
             </Button>
           </div>
-          <div className="col-2 mt-3">
-            <GoogleLoginComponent />
+          <div className="col-12 col-md-5 mt-3 d-flex justify-content-center">
+            <div className="w-100" >
+              <GoogleLoginComponent />
+            </div>
           </div>
         </div>
+
       </Form>
 
       
