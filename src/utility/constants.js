@@ -66,3 +66,5 @@ export const INPUT_ADD_PRODUCT = [
 ]
 
 export const BASE_URL = 'https://us-central1-test-b7665.cloudfunctions.net/api/stores/ijpxNJLM732vm8AeajMR';
+
+export const GOOGLE_CLIENT_ID = "488766778585-1e04ign0vohi1ait05rucct9cnm20s0e.apps.googleusercontent.com"

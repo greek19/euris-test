@@ -4,6 +4,7 @@ import { login } from '../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Alert } from 'react-bootstrap';
 import { ERROR_MESSAGES_LOGIN, MOCK_USERS } from '../utility/constants'; 
+import GoogleLoginComponent from '../components/GoogleLoginComponent';
 
 const ErrorAlert = ({ error }) => (error ? <Alert variant="danger">{error}</Alert> : null);
 
@@ -71,10 +72,20 @@ const Login = () => {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit" className="mt-3" id="button-login">
-          Login
-        </Button>
+        <div className="row justify-content-between">
+          <div className="col-2">
+            <Button variant="primary" type="submit" className="mt-3" id="button-login">
+              Login
+            </Button>
+          </div>
+          <div className="col-2 mt-3">
+            <GoogleLoginComponent />
+          </div>
+        </div>
       </Form>
+
+      
+
     </div>
   );
 };
