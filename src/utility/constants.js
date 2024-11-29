@@ -1,6 +1,7 @@
 import { CHART, PRODUCTS } from "./routesConstants";
 
-// Utenti mock per la validazione della login
+export const ELEMENTS = 9; // Numero di elementi per pagina
+
 export const MOCK_USERS = [
   {
     username: "Aldo",
@@ -33,7 +34,6 @@ export const ERROR_MESSAGES_LOGIN = {
   invalid: 'Credenziali non valide. Riprova.',
 };
 
-// Configurazione delle card
 export const CARD_DETAILS = [
   {
     title: 'Gestisci Prodotti',
@@ -56,3 +56,13 @@ export const CARD_DETAILS = [
     disabled: true,
   },
 ];
+
+export const INPUT_ADD_PRODUCT = [
+  { name: "title", type: "text", label: "Titolo*", placeholder: "Inserisci il titolo" },
+  { name: "category", type: "text", label: "Categoria*", placeholder: "Inserisci la categoria" },
+  { name: "price", type: "text", label: "Prezzo*", placeholder: "Inserisci il prezzo", onInput: (e) => e.target.value = validatePriceInput(e.target.value) },
+  { name: "employee", type: "text", label: "Dipendente", placeholder: "Inserisci il nome del dipendente" },
+  { name: "description", as: "textarea", label: "Descrizione", placeholder: "Inserisci una descrizione", rows: 3 },
+]
+
+export const BASE_URL = 'https://us-central1-test-b7665.cloudfunctions.net/api/stores/ijpxNJLM732vm8AeajMR';

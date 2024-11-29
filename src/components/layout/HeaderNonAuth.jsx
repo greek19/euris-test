@@ -11,9 +11,9 @@ const HeaderNonAuth = () => {
       <Container>
       <Navbar.Brand as={Link} to={ROOT}>
           <img
-            src={logo} // Utilizza il logo importato
+            src={logo}
             alt="My App"
-            height="30" // Imposta l'altezza dell'immagine (modificabile)
+            height="30"
           />        
         </Navbar.Brand>        
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

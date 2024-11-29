@@ -1,18 +1,17 @@
 import React from "react";
 import { Button, Card, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
-import TruncatedText from "./TruncatedText"; // Importa il componente di troncamento del testo
+import TruncatedText from "./TruncatedText";
 
 const ProductCard = ({ product, onShowReviews, onShowDelete, layoutMode }) => {
-  // Aggiungi layoutMode per determinare se la visualizzazione è a lista o a griglia
   const isGridLayout = layoutMode === "grid";
 
   return (
     <Col
-      xs={12} // Sempre 1 card per riga su mobile
-      sm={isGridLayout ? 6 : 12} // 2 card per riga in modalità griglia, 1 per riga in lista
-      md={isGridLayout ? 4 : 12} // 3 card per riga su schermi medi in modalità griglia
-      lg={isGridLayout ? 4 : 12} // 3 card per riga su schermi larghi in modalità griglia
-      xl={isGridLayout ? 4 : 12} // 3 card per riga su schermi extra larghi in modalità griglia
+      xs={12} 
+      sm={isGridLayout ? 6 : 12} 
+      md={isGridLayout ? 4 : 12} 
+      lg={isGridLayout ? 4 : 12}
+      xl={isGridLayout ? 4 : 12} 
       className="h-100 p-2"
     >
       <Card className="h-100 d-flex flex-column">

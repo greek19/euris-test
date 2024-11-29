@@ -7,10 +7,10 @@ const PrivateRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   if (!isAuthenticated) {
-    return <Navigate to={LOGIN} />; // Redirect a login se non autenticato
+    return <Navigate to={LOGIN} />; 
   }
 
-  return children; // Se autenticato, rendi il componente figlio
+  return children;
 };
 
 export default PrivateRoute;

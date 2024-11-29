@@ -8,7 +8,7 @@ import {
   Legend,
   Title,
   CategoryScale,
-  RadialLinearScale, // Importa la scala radialLinear
+  RadialLinearScale, 
 } from 'chart.js';
 import { Container, Spinner } from 'react-bootstrap';
 import { COLORS } from '../utility/constants';
@@ -20,13 +20,12 @@ ChartJS.register(
   Legend, 
   Title, 
   CategoryScale, 
-  RadialLinearScale // Registriamo la scala radialLinear
+  RadialLinearScale
 );
 
 const CategoryChart = () => {
   const { data, error, isLoading } = useGetCategoriesStatsQuery();
 
-  // Prepara i dati per il grafico PolarArea
   const chartData = {
     labels: data ? data.map(item => item.category) : [], 
     datasets: [
@@ -40,7 +39,6 @@ const CategoryChart = () => {
     ],
   };
 
-  // Gestione dei vari stati di richiesta
   if (isLoading) return <Spinner animation="border" />;
   if (error) return <p>Errore nel recupero dei dati: {error.message}</p>;
 

@@ -15,6 +15,7 @@ import { useAddProductMutation } from "../features/products/productsApi";
 import { useSelector } from "react-redux";
 import { ReviewsList } from "../components/ReviewsList";
 import { validatePriceInput } from "../utility/functions";
+import { INPUT_ADD_PRODUCT } from "../utility/constants";
 
 
 const AddProduct = () => {
@@ -43,7 +44,7 @@ const AddProduct = () => {
   const handleAddReview = (review, setFieldValue) => {
     if (review.trim()) {
       setReviews([...reviews, review.trim()]);
-      setFieldValue("reviewInput", ""); // Resetta il campo di input
+      setFieldValue("reviewInput", "");
     }
   };
 
@@ -55,9 +56,9 @@ const AddProduct = () => {
     const newProduct = { ...values, price: parseFloat(values.price), reviews };
     try {
       await addProduct(newProduct).unwrap();
-      setShowToast(true); // Mostra il Toast
-      resetForm(); // Resetta il form
-      setReviews([]); // Resetta le recensioni
+      setShowToast(true); 
+      resetForm();
+      setReviews([]); 
     } catch (err) {
       console.error("Errore durante l'aggiunta del prodotto:", err);
     }
@@ -70,7 +71,6 @@ const AddProduct = () => {
       <h2 className="pb-4">Aggiungi Nuovo Prodotto</h2>
       {isError && <Alert variant="danger">Errore: {error?.data?.message || "Errore durante l'aggiunta del prodotto."}</Alert>}
 
-      {/* Toast di successo */}
       <ToastContainer position="top-end" className="p-3">
         <Toast
           onClose={() => setShowToast(false)}
@@ -100,13 +100,7 @@ const AddProduct = () => {
       >
         {({ values, handleChange, setFieldValue }) => (
           <Form>
-            {[
-              { name: "title", type: "text", label: "Titolo*", placeholder: "Inserisci il titolo" },
-              { name: "category", type: "text", label: "Categoria*", placeholder: "Inserisci la categoria" },
-              { name: "price", type: "text", label: "Prezzo*", placeholder: "Inserisci il prezzo", onInput: (e) => e.target.value = validatePriceInput(e.target.value) },
-              { name: "employee", type: "text", label: "Dipendente", placeholder: "Inserisci il nome del dipendente" },
-              { name: "description", as: "textarea", label: "Descrizione", placeholder: "Inserisci una descrizione", rows: 3 },
-            ].map(({ name, ...props }) => (
+            {INPUT_ADD_PRODUCT.map(({ name, ...props }) => (
               <div className="mb-3" key={name}>
                 <label className="form-label fw-bold">{props.label}</label>
                 <Field name={name} className="form-control" {...props} />
@@ -116,7 +110,6 @@ const AddProduct = () => {
               </div>
             ))}
 
-            {/* Recensioni */}
             <Card className="mb-4">
               <Card.Header>
                 <h5>Recensioni</h5>
@@ -149,7 +142,6 @@ const AddProduct = () => {
                   </Col>
                 </Row>
 
-                {/* Lista recensioni con paginazione */}
                 <ReviewsList
                   reviews={reviews}
                   paginatedReviews={paginatedReviews}

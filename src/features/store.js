@@ -6,24 +6,22 @@ import authReducer from './auth/authSlice';
 
 // Configurazione di redux-persist
 const persistConfig = {
-  key: 'root', // Chiave principale per la persistenza
-  storage,     // Specifica il tipo di storage (default: Local Storage)
+  key: 'root', 
+  storage,     
 };
 
 const rootReducer = combineReducers({
   [productsApi.reducerPath]: productsApi.reducer,
-  auth: authReducer, // Combina il reducer di autenticazione
+  auth: authReducer, 
 });
 
-// Applica il persistReducer al rootReducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// Configura lo store Redux con il persistedReducer
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // Disattiva i controlli di serializzabilità di redux-persist
+      serializableCheck: false, 
     }).concat(productsApi.middleware),
 });
 

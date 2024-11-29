@@ -2,7 +2,6 @@ import React from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 const TruncatedText = ({ text, maxLength = 100 }) => {
-  // Verifica se il testo necessita di troncamento
   const isTruncated = text.length > maxLength;
   const displayedText = isTruncated ? `${text.slice(0, maxLength)}...` : text;
 

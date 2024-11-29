@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { CHART, PRODUCTS } from '../utility/routesConstants';
 import {CARD_DETAILS} from '../utility/constants'
 
-// Componente CardItem per una singola card
 const CardItem = ({ title, text, link, buttonText, disabled }) => (
   <Col md={4} className="p-2">
     <Card className="h-100 d-flex flex-column">
@@ -35,7 +34,6 @@ const Home = () => {
     <Container>
       <Row className="my-4">
         <Col className="p-2">
-          {/* Benvenuto personalizzato */}
           <Card>
             <Card.Body>
               <Card.Title id="home-card-title-1">Benvenuto, {user?.username}!</Card.Title>
@@ -47,7 +45,6 @@ const Home = () => {
         </Col>
       </Row>
 
-      {/* Card per le funzionalità dell'app */}
       <Row className="my-4">
         {CARD_DETAILS.map((card, index) => (
           <CardItem

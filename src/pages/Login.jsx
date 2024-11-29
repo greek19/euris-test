@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Alert } from 'react-bootstrap';
-import { ERROR_MESSAGES_LOGIN, MOCK_USERS } from '../utility/constants'; // Importa utenti mock
+import { ERROR_MESSAGES_LOGIN, MOCK_USERS } from '../utility/constants'; 
 
 const ErrorAlert = ({ error }) => (error ? <Alert variant="danger">{error}</Alert> : null);
 
@@ -39,8 +39,8 @@ const Login = () => {
     );
 
     if (isValidUser) {
-      dispatch(login({ username })); // Salva l'utente in Redux
-      navigate('/'); // Reindirizza alla home
+      dispatch(login({ username }));
+      navigate('/');
     } else {
       setError(ERROR_MESSAGES_LOGIN.invalid);
     }

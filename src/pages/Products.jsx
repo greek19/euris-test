@@ -3,12 +3,12 @@ import { Spinner, Container, Button, Row, Col, Toast, ToastContainer } from "rea
 import { useDeleteProductMutation, useGetProductsQuery } from "../features/products/productsApi";
 import CustomModal from "../components/CustomModal";
 import ProductCard from "../components/ProductCard";
-import PaginationComponent from "../components/PaginationComponent"; // Importa il componente di paginazione
-import { FaTh, FaList } from 'react-icons/fa'; // Importa le icone per la griglia e la lista
+import PaginationComponent from "../components/PaginationComponent"; 
+import { FaTh, FaList } from 'react-icons/fa';
+import { ELEMENTS } from "../utility/constants";
 
 const Products = () => {
-  const elements = 9; // Numero di elementi per pagina
-  const [layout, setLayout] = useState("panel"); // "panel" per lista, "grid" per griglia
+  const [layout, setLayout] = useState("panel");
   const [page, setPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
@@ -16,31 +16,31 @@ const Products = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const [messageDelete, setMessageDelete] = useState("");
-  const { data, error, isLoading, refetch } = useGetProductsQuery({ page, elements });
+  const { data, error, isLoading, refetch } = useGetProductsQuery({ page, ELEMENTS });
   const [deleteProduct] = useDeleteProductMutation();
 
   useEffect(() => {
-    refetch(); // Recupera i prodotti alla prima renderizzazione del componente
+    refetch();
   }, []);
 
-  // Gestione eliminazione prodotto
   const handleDelete = async () => {
     try {
-      await deleteProduct(selectedProduct.id).unwrap(); // Effettua la chiamata DELETE
+      await deleteProduct(selectedProduct.id).unwrap();
       setShowModal(false);
       setPage(1); // Torna alla prima pagina
       refetch(); // Aggiorna la lista dei prodotti
-      setShowToast(true); // Mostra il toast
       setMessageDelete("Prodotto eliminato con successo!")
     } catch (error) {
       console.error("Errore durante l'eliminazione:", error);
       setMessageDelete("Errore durante l'eliminazione.")
-      setShowToast(true)
       setShowModal(false)
     }
+    setShowToast(true); 
   };
 
-  const toggleLayout = () => setLayout((prev) => (prev === "panel" ? "grid" : "panel")); // Cambia il layout tra "panel" e "grid"
+  const toggleLayout = () => {
+    setLayout((prev) => (prev === "panel" ? "grid" : "panel"));
+  }
 
   const handleShowReviews = (reviews) => {
     setSelectedReviews(reviews);
@@ -57,8 +57,7 @@ const Products = () => {
   if (isLoading) return <Spinner animation="border" />;
   if (error) return <p className="text-danger">Errore nel caricamento dei prodotti!</p>;
 
-  const modalContent =
-    modalType === "reviews" ? (
+  const modalContent = modalType === "reviews" ? (
       selectedReviews?.length > 0 ? (
         <ul>
           {selectedReviews.map((review, index) => (
@@ -74,8 +73,7 @@ const Products = () => {
       </p>
     );
 
-  const modalFooter =
-    modalType === "reviews" ? null : (
+  const modalFooter = modalType === "reviews" ? null : (
       <>
         <Button variant="danger" onClick={handleDelete} data-testid="btn-modal-elimina">
           Elimina
@@ -95,14 +93,13 @@ const Products = () => {
         </Button>
       </div>
 
-      {/* Mostra le card in modalità griglia o lista */}
       <Row className={layout === "grid" ? "g-4" : ""}>
         {data?.list.map((product) => (
           <Col
             key={product?.id}
-            xs={layout === "grid" ? 6 : 12} // 2 card per riga in griglia, una card per riga in lista
+            xs={layout === "grid" ? 6 : 12} 
             sm={layout === "grid" ? 6 : 12}
-            md={layout === "grid" ? 4 : 12} // Griglia 3 colonne per schermi medi, 1 colonna per lista
+            md={layout === "grid" ? 4 : 12} 
             lg={layout === "grid" ? 4 : 12}
             xl={layout === "grid" ? 4 : 12}
           >
@@ -115,15 +112,13 @@ const Products = () => {
         ))}
       </Row>
 
-      {/* Componente di Paginazione */}
       <PaginationComponent
         page={page}
         setPage={setPage}
         totalItems={data?.length || 0}
-        itemsPerPage={elements}
+        itemsPerPage={ELEMENTS}
       />
 
-      {/* Modale per le recensioni o la conferma eliminazione */}
       <CustomModal
         show={showModal}
         onHide={() => setShowModal(false)}
@@ -133,7 +128,6 @@ const Products = () => {
         {modalContent}
       </CustomModal>
 
-      {/* Toast per conferma eliminazione */}
       <ToastContainer position="top-end" className="p-3">
         <Toast
           onClose={() => setShowToast(false)}

@@ -1,6 +1,5 @@
 import { Button, ListGroup, Pagination } from "react-bootstrap";
 
-// Componente per le recensioni con paginazione
 export const ReviewsList = ({ reviews, paginatedReviews, currentPage, reviewsPerPage, handlePageChange, handleDeleteReview }) => (
     <>
       <ListGroup className="mt-3">

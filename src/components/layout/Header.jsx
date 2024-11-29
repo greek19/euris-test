@@ -22,26 +22,22 @@ const Header = () => {
       <Container>
         <Navbar.Brand as={Link} to={ROOT}>
           <img
-            src={logo} // Utilizza il logo importato
+            src={logo} 
             alt="My App"
-            height="30" // Imposta l'altezza dell'immagine (modificabile)
+            height="30" 
           />        
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
 
-            {/* Altri link se necessari */}
             <Nav.Link as={Link} to={ROOT}>
               Home
             </Nav.Link>
-            {/* Dropdown per il menu Prodotti */}
             <NavDropdown title="Prodotti" id="products-dropdown">
-              {/* Link per la lista dei prodotti */}
               <NavDropdown.Item as={Link} to={PRODUCTS}>
                 Lista Prodotti
               </NavDropdown.Item>
-              {/* Link per aggiungere un nuovo prodotto */}
               <NavDropdown.Item as={Link} to={ADD_PRODUCTS}>
                 Nuovo Prodotto
               </NavDropdown.Item>
