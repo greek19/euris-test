@@ -38,7 +38,7 @@ const Home = () => {
           {/* Benvenuto personalizzato */}
           <Card>
             <Card.Body>
-              <Card.Title>Benvenuto, {user?.username}!</Card.Title>
+              <Card.Title id="home-card-title-1">Benvenuto, {user?.username}!</Card.Title>
               <Card.Text>
                 Ciao {user?.username}, esplora le funzionalità dell'app utilizzando i link nelle card in basso!
               </Card.Text>

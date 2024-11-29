@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { logout } from '../../features/auth/authSlice';
 import logo from '../../assets/favicon.png'; 
 import { ADD_PRODUCTS, CHART, LOGIN, PRODUCTS, ROOT } from '../../utility/routesConstants';
+import { persistor } from '../../features/store';
 
 const Header = () => {
   const user = useSelector((state)=> state.auth.user);
@@ -13,6 +14,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logout()); 
+    persistor.purge();
   };
 
   return (

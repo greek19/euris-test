@@ -48,6 +48,7 @@ const ProductCard = ({ product, onShowReviews, onShowDelete, layoutMode }) => {
                 <Button
                   variant="primary"
                   onClick={() => onShowReviews(product?.data.reviews)}
+                  data-testid="review-button"
                   disabled={product?.data.reviews.length === 0 || (product?.data.reviews.length === 1 && product?.data.reviews[0] === "")}
                   style={
                     product?.data.reviews.length === 0 ||
@@ -61,7 +62,7 @@ const ProductCard = ({ product, onShowReviews, onShowDelete, layoutMode }) => {
               </span>
             </OverlayTrigger>
 
-            <Button variant="outline-danger" onClick={() => onShowDelete(product)}>
+            <Button variant="outline-danger" onClick={() => onShowDelete(product)} data-testid="delete-button">
               <i className="bi bi-trash"></i>
             </Button>
           </div>

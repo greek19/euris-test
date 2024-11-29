@@ -17,3 +17,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </Provider>
   </React.StrictMode>
 );
+
+
+if (window.Cypress) {
+  window.store = store
+}

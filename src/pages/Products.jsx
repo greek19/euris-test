@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Spinner, Container, Button, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import { useDeleteProductMutation, useGetProductsQuery } from "../features/products/productsApi";
 import CustomModal from "../components/CustomModal";
@@ -7,6 +7,7 @@ import PaginationComponent from "../components/PaginationComponent"; // Importa 
 import { FaTh, FaList } from 'react-icons/fa'; // Importa le icone per la griglia e la lista
 
 const Products = () => {
+  const elements = 9; // Numero di elementi per pagina
   const [layout, setLayout] = useState("panel"); // "panel" per lista, "grid" per griglia
   const [page, setPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
@@ -14,11 +15,13 @@ const Products = () => {
   const [selectedReviews, setSelectedReviews] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showToast, setShowToast] = useState(false);
-
-  const elements = 9; // Numero di elementi per pagina
-
+  const [messageDelete, setMessageDelete] = useState("");
   const { data, error, isLoading, refetch } = useGetProductsQuery({ page, elements });
   const [deleteProduct] = useDeleteProductMutation();
+
+  useEffect(() => {
+    refetch(); // Recupera i prodotti alla prima renderizzazione del componente
+  }, []);
 
   // Gestione eliminazione prodotto
   const handleDelete = async () => {
@@ -28,8 +31,12 @@ const Products = () => {
       setPage(1); // Torna alla prima pagina
       refetch(); // Aggiorna la lista dei prodotti
       setShowToast(true); // Mostra il toast
+      setMessageDelete("Prodotto eliminato con successo!")
     } catch (error) {
       console.error("Errore durante l'eliminazione:", error);
+      setMessageDelete("Errore durante l'eliminazione.")
+      setShowToast(true)
+      setShowModal(false)
     }
   };
 
@@ -70,7 +77,7 @@ const Products = () => {
   const modalFooter =
     modalType === "reviews" ? null : (
       <>
-        <Button variant="danger" onClick={handleDelete}>
+        <Button variant="danger" onClick={handleDelete} data-testid="btn-modal-elimina">
           Elimina
         </Button>
         <Button variant="secondary" onClick={() => setShowModal(false)} className="ms-2">
@@ -83,7 +90,7 @@ const Products = () => {
     <Container>
       <div className="row d-flex justify-content-between align-items-center mb-3">
         <h2 className="col-auto mb-0">Lista Prodotti</h2>
-        <Button variant="primary" onClick={toggleLayout} className="col-auto mx-2">
+        <Button variant="primary" onClick={toggleLayout} className="col-auto mx-2" id="switch-layout">
           {layout === "panel" ? <FaList /> : <FaTh />}
         </Button>
       </div>
@@ -138,7 +145,7 @@ const Products = () => {
           <Toast.Header>
             <strong className="me-auto">Notifica</strong>
           </Toast.Header>
-          <Toast.Body className="text-white">Prodotto eliminato con successo!</Toast.Body>
+          <Toast.Body className="text-white">{messageDelete}</Toast.Body>
         </Toast>
       </ToastContainer>
     </Container>

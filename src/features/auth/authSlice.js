@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { persistor } from '../../features/store';  // Importa il persistor
 
 const initialState = {
   user: null,  // L'utente sarà null se non è loggato
@@ -17,9 +18,10 @@ const authSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
     },
+    resetState: () => initialState, // Nuova azione per reset del reducer
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, resetState } = authSlice.actions;
 
 export default authSlice.reducer;

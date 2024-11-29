@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Layout from './components/layout/Layout';
@@ -18,6 +18,7 @@ const App = () => {
         <Route path={PRODUCTS} element={<PrivateRoute><Products /></PrivateRoute>} />
         <Route path={ADD_PRODUCTS} element={<PrivateRoute><AddProduct /></PrivateRoute>} />
         <Route path={CHART} element={<PrivateRoute><CategoryChart /></PrivateRoute>} />
+        <Route path="*" element={<Navigate to={ROOT} />} />
       </Routes>
     </Layout>
   );

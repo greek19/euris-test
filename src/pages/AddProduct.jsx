@@ -61,12 +61,14 @@ const AddProduct = () => {
     } catch (err) {
       console.error("Errore durante l'aggiunta del prodotto:", err);
     }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
   };
 
   return (
     <Container className="my-4">
       <h2 className="pb-4">Aggiungi Nuovo Prodotto</h2>
-      {isError && <Alert variant="danger">Errore: {error?.data?.message || "Errore generico."}</Alert>}
+      {isError && <Alert variant="danger">Errore: {error?.data?.message || "Errore durante l'aggiunta del prodotto."}</Alert>}
 
       {/* Toast di successo */}
       <ToastContainer position="top-end" className="p-3">
