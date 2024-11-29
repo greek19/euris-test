@@ -16,7 +16,7 @@ const Products = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const [messageDelete, setMessageDelete] = useState("");
-  const { data, error, isLoading, refetch } = useGetProductsQuery({ page, 9 });
+  const { data, error, isLoading, refetch } = useGetProductsQuery({ page, elements: ELEMENTS });
   const [deleteProduct] = useDeleteProductMutation();
 
   useEffect(() => {
