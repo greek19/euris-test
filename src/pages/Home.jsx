@@ -48,7 +48,7 @@ const Home = () => {
       <Row className="my-4">
         {CARD_DETAILS.map((card, index) => (
           <CardItem
-            key={index}
+            key={"cardItem-"+index}
             title={card.title}
             text={card.text}
             link={card.link}

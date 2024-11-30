@@ -4,7 +4,16 @@ import TruncatedText from "./TruncatedText";
 import PropTypes from "prop-types";
 
 ProductCard.propType = {
-  product: PropTypes.object.isRequired,
+  product: {
+    data: {
+      title: PropTypes.string.isRequired,
+      category:  PropTypes.string.isRequired,
+      price:  PropTypes.string.isRequired,
+      employee:  PropTypes.string,
+      description:  PropTypes.string,
+      reviews:  PropTypes.array,
+    }
+  },
   onShowReviews: PropTypes.func.isRequired,
   onShowDelete: PropTypes.func.isRequired,
   layoutMode: PropTypes.string.isRequired

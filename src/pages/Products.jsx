@@ -61,7 +61,7 @@ const Products = () => {
       selectedReviews?.length > 0 ? (
         <ul>
           {selectedReviews.map((review, index) => (
-            <li key={index}>{review}</li>
+            <li key={"modalContent"+index}>{review}</li>
           ))}
         </ul>
       ) : (
