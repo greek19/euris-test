@@ -16,7 +16,7 @@ describe('productsApi - deleteProduct', () => {
     it('should delete a product successfully', () => {
       // Ensure the delete button is visible and click it
       cy.get('[data-testid="delete-button"]').first().should('be.visible').click();
-      cy.get('[data-testid="btn-modal-elimina"').first().should('be.visible').click();
+      cy.get('[data-testid="btn-modal-elimina"').click();
   
       // Wait for the DELETE request to be sent
       cy.wait('@deleteProductRequest').then((interception) => {

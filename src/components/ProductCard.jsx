@@ -1,6 +1,14 @@
 import React from "react";
 import { Button, Card, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import TruncatedText from "./TruncatedText";
+import PropTypes from "prop-types";
+
+ProductCard.propType = {
+  product: PropTypes.object.isRequired,
+  onShowReviews: PropTypes.func.isRequired,
+  onShowDelete: PropTypes.func.isRequired,
+  layoutMode: PropTypes.string.isRequired
+}
 
 const ProductCard = ({ product, onShowReviews, onShowDelete, layoutMode }) => {
   const isGridLayout = layoutMode === "grid";
@@ -17,19 +25,19 @@ const ProductCard = ({ product, onShowReviews, onShowDelete, layoutMode }) => {
       <Card className="h-100 d-flex flex-column">
         <Card.Body className="d-flex flex-column">
           <Card.Title>
-            <TruncatedText text={product.data.title} />
+            <TruncatedText text={product?.data.title} />
           </Card.Title>
           <Card.Subtitle className="mb-2 text-muted">
-            Categoria: <TruncatedText text={product.data.category} />
+            Categoria: <TruncatedText text={product?.data.category} />
           </Card.Subtitle>
           <Card.Text>
-            <strong>Prezzo: </strong> €{product.data.price}
+            <strong>Prezzo: </strong> €{product?.data.price}
             <br />
             <strong>Dipendente: </strong>
-            <TruncatedText text={product.data.employee || "Non specificato"} />
+            <TruncatedText text={product?.data.employee || "Non specificato"} />
             <br />
             <strong>Descrizione: </strong>
-            <TruncatedText text={product.data.description || "Nessuna descrizione disponibile"} />
+            <TruncatedText text={product?.data.description || "Nessuna descrizione disponibile"} />
           </Card.Text>
           <div className="mt-auto d-flex justify-content-between">
             <OverlayTrigger

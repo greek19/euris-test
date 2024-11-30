@@ -1,3 +1,4 @@
+import { validatePriceInput } from "./functions";
 import { CHART, PRODUCTS } from "./routesConstants";
 
 export const ELEMENTS = 9; // Numero di elementi per pagina

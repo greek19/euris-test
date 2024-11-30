@@ -1,5 +1,15 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { Modal } from "react-bootstrap";
+
+CustomModal.propTypes = {
+  show: PropTypes.boolean.isRequired,
+  onHide: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.any.isRequired,
+  footer: PropTypes.any.isRequired
+
+}
 
 const CustomModal = ({ show, onHide, title, children, footer }) => {
   return (

@@ -32,7 +32,7 @@ describe('AddProduct Page Tests', () => {
       // Compila il form con dati validi
       cy.get('input[name="title"]').type('Prodotto Test');
       cy.get('input[name="category"]').type('Categoria Test');
-      cy.get('input[name="price"]').type('99.99');
+      cy.get('input[name="price"]').type('99');
       cy.get('input[name="employee"]').type('Mario Rossi');
       cy.get('textarea[name="description"]').type('Descrizione del prodotto test.');
   
