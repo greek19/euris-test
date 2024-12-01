@@ -23,7 +23,7 @@ const GoogleLoginComponent = () => {
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <div className="google-login">
+      <div className="google-login-container">
         <GoogleLogin
           onSuccess={handleSuccess}
           onError={handleError}
