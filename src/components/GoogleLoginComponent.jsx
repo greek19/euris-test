@@ -27,6 +27,7 @@ const GoogleLoginComponent = () => {
         <GoogleLogin
           onSuccess={handleSuccess}
           onError={handleError}
+          className={"google-login-button"}
         />
       </div>
     </GoogleOAuthProvider>
