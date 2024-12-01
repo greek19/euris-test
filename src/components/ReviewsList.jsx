@@ -45,7 +45,7 @@ export const ReviewsList = ({ reviews, paginatedReviews, currentPage, reviewsPer
     </>
   );
 
-ReviewsList.propType = {
+ReviewsList.propTypes = {
   reviews: PropTypes.array.isRequired,
   paginatedReviews: PropTypes.any.isRequired,
   currentPage: PropTypes.number.isRequired,

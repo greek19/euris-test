@@ -14,6 +14,6 @@ export const PrivateRoute = ({ children }) => {
   return children;
 };
 
-PrivateRoute.propType = {
+PrivateRoute.propTypes = {
   children: PropTypes.any.isRequired
 }

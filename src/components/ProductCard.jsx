@@ -72,7 +72,7 @@ export const ProductCard = ({ product, onShowReviews, onShowDelete, layoutMode }
   );
 };
 
-ProductCard.propType = {
+ProductCard.propTypes = {
   product: {
     data: {
       title: PropTypes.string.isRequired,
