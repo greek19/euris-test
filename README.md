@@ -89,3 +89,37 @@ MOCK_USERS = [
 
 oppure tramite l'utilizzo di Google Authenticator.
 
+## Possibili Nuove Implementazioni
+L'applicazione può essere ulteriormente arricchita con nuove funzionalità e miglioramenti, tra cui:
+
+### Gestione Impostazioni Utente
+- **Interfaccia per le impostazioni personali:** Creazione di una nuova pagina dedicata dove gli utenti possono modificare le proprie informazioni personali, come nome, email e password.
+- **Impostazioni preferenze:** Possibilità di configurare layout predefiniti (es. griglia o lista), tema (es. modalità scura/chiara) o lingua.
+- **Sviluppo API:**
+    - Endpoint per la gestione delle impostazioni utente.
+    - Endpoint per la modifica della password con controllo di sicurezza.
+    - Endpoint per il reset delle preferenze ai valori di default.
+
+### Filtri Avanzati nella Lista Prodotti
+- **Filtraggio per categoria:** Aggiunta di un filtro dropdown o checkbox che consente di selezionare una o più categorie da visualizzare.
+- **Filtri combinati:** Implementazione di filtri multipli come:
+    - Fascia di prezzo.
+    - Disponibilità in magazzino.
+    - Valutazione media delle recensioni.
+- **Ricerca avanzata:**
+    - Barra di ricerca con autocompletamento per titolo prodotto.
+    - Sviluppo API per supportare il filtraggio e la ricerca combinata.
+
+### Miglioramenti alle Statistiche
+- **Grafici Interattivi:**
+    - Aggiunta di nuovi tipi di grafici, come grafici a linee per monitorare l'andamento delle vendite nel tempo.
+    - Grafico a torta per visualizzare la distribuzione percentuale delle categorie.
+- **Filtraggio delle statistiche:**
+    - Possibilità di visualizzare statistiche per intervallo temporale (giorno, mese, anno).
+    - Filtri avanzati per analizzare le vendite in base a dipendenti, categorie o fasce di prezzo.
+
+### Notifiche Avanzate
+- **Sistema di notifiche real-time:** Avvisi in tempo reale per:
+    - Modifiche apportate ai prodotti da altri utenti.
+    - Scadenza di prodotti in magazzino.
+- **Storico delle notifiche:** Una pagina dedicata per consultare le notifiche passate.
