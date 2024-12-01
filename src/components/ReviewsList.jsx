@@ -1,15 +1,6 @@
 import PropTypes from "prop-types";
 import { Button, ListGroup, Pagination } from "react-bootstrap";
 
-ReviewsList.propType = {
-  reviews: PropTypes.array.isRequired,
-  paginatedReviews: PropTypes.any.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  reviewsPerPage: PropTypes.number.isRequired,
-  handlePageChange: PropTypes.func.isRequired,
-  handleDeleteReview: PropTypes.func.isRequired
-}
-
 export const ReviewsList = ({ reviews, paginatedReviews, currentPage, reviewsPerPage, handlePageChange, handleDeleteReview }) => (
     <>
       <ListGroup className="mt-3">
@@ -53,3 +44,12 @@ export const ReviewsList = ({ reviews, paginatedReviews, currentPage, reviewsPer
       )}
     </>
   );
+
+ReviewsList.propType = {
+  reviews: PropTypes.array.isRequired,
+  paginatedReviews: PropTypes.any.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  reviewsPerPage: PropTypes.number.isRequired,
+  handlePageChange: PropTypes.func.isRequired,
+  handleDeleteReview: PropTypes.func.isRequired
+}

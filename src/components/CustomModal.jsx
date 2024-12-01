@@ -2,16 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-CustomModal.propTypes = {
-  show: PropTypes.boolean.isRequired,
-  onHide: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  children: PropTypes.any.isRequired,
-  footer: PropTypes.any.isRequired
-
-}
-
-const CustomModal = ({ show, onHide, title, children, footer }) => {
+export const CustomModal = ({ show, onHide, title, children, footer }) => {
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
@@ -25,4 +16,11 @@ const CustomModal = ({ show, onHide, title, children, footer }) => {
   );
 };
 
-export default CustomModal;
+CustomModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onHide: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.any.isRequired,
+  footer: PropTypes.any.isRequired
+
+}

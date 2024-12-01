@@ -6,7 +6,7 @@ import Layout from './components/layout/Layout';
 import AddProduct from './pages/AddProduct';
 import CategoryChart from './pages/CategoryChart';
 import Login from './pages/Login';
-import PrivateRoute from './components/PrivateRoute';
+import {PrivateRoute} from './components/PrivateRoute';
 import { ADD_PRODUCTS, CHART, LOGIN, PRODUCTS, ROOT } from './utility/routesConstants';
 
 const App = () => {

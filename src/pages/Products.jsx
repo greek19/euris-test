@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Spinner, Container, Button, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import { useDeleteProductMutation, useGetProductsQuery } from "../features/products/productsApi";
-import CustomModal from "../components/CustomModal";
-import ProductCard from "../components/ProductCard";
-import PaginationComponent from "../components/PaginationComponent"; 
+import {CustomModal} from "../components/CustomModal";
+import {ProductCard} from "../components/ProductCard";
+import {PaginationComponent} from "../components/PaginationComponent"; 
 import { FaTh, FaList } from 'react-icons/fa';
 import { ELEMENTS } from "../utility/constants";
 

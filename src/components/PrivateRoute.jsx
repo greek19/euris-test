@@ -4,11 +4,7 @@ import { useSelector } from 'react-redux';
 import { LOGIN } from '../utility/routesConstants';
 import PropTypes from 'prop-types';
 
-PrivateRoute.propType = {
-  children: PropTypes.any.isRequired
-}
-
-const PrivateRoute = ({ children }) => {
+export const PrivateRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   if (!isAuthenticated) {
@@ -18,4 +14,6 @@ const PrivateRoute = ({ children }) => {
   return children;
 };
 
-export default PrivateRoute;
+PrivateRoute.propType = {
+  children: PropTypes.any.isRequired
+}
