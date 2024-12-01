@@ -10,6 +10,7 @@ import {
   Col,
   Toast,
   ToastContainer,
+  InputGroup,
 } from "react-bootstrap";
 import { useAddProductMutation } from "../features/products/productsApi";
 import { useSelector } from "react-redux";
@@ -102,7 +103,14 @@ const AddProduct = () => {
             {INPUT_ADD_PRODUCT.map(({ name, ...props }) => (
               <div className="mb-3" key={name}>
                 <label className="form-label fw-bold">{props?.label}</label>
-                <Field name={name} className="form-control" {...props} />
+                {name === "price" ? 
+                  <InputGroup>
+                    <InputGroup.Text>€</InputGroup.Text>
+                    <Field name={name} className="form-control" {...props} />
+                  </InputGroup>
+                  :
+                  <Field name={name} className="form-control" {...props} />
+                }
                 <div className="invalid-feedback d-block">
                   <ErrorMessage name={name} />
                 </div>

@@ -1,12 +1,10 @@
-describe('App Routing and Protected Routes', () => {
+describe('Test App.jsx', () => {
       
-    it('allows authenticated users to access protected routes', () => {
-      // Simula il login (dipende dall'implementazione, ma può essere un salvataggio diretto nello store Redux o nei cookie)
+    it('Test rotte protette con utente autenticato', () => {
       cy.login('Aldo', '123');
       cy.visit('/');
       cy.url().should('eq', `${Cypress.config().baseUrl}/`);
   
-      // Naviga alle rotte protette
       cy.visit('/products');
       cy.get('h2').contains('Lista Prodotti').should('exist');
   

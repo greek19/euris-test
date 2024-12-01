@@ -49,6 +49,8 @@ Inoltre, un grafico visualizza i prodotti per categoria. È costruita utilizzand
 - **Formik** e **Yup** per i form dinamici e la validazione lato client.
 - **React-Icons** per le icone.
 
+### Qualità del Codice
+- **SonarCloud** per l'analisi statica del codice, il monitoraggio della qualità e l'individuazione di bug, vulnerabilità e code smells.
 
 ---
 
@@ -84,4 +86,6 @@ MOCK_USERS = [
     }
 ]
 ```
+
+oppure tramite l'utilizzo di Google Authenticator.
 

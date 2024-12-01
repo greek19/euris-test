@@ -1,11 +1,10 @@
-describe('AddProduct Page Tests', () => {
+describe('Test AddProduct.jsx', () => {
     beforeEach(() => {
-      // Autentica un utente per accedere alla pagina
-      cy.login('Aldo', '123'); // Login per autenticarsi prima del test
-      cy.visit('/add-products'); // Vai alla pagina di aggiunta prodotto
+      cy.login('Aldo', '123'); 
+      cy.visit('/add-products');
     });
   
-    it('renders the form with all fields and buttons', () => {
+    it('Test visualizzazione corretta del form', () => {
       // Controlla se tutti i campi sono visibili
       cy.get('input[name="title"]').should('be.visible');
       cy.get('input[name="category"]').should('be.visible');
@@ -18,38 +17,34 @@ describe('AddProduct Page Tests', () => {
       cy.get('button[type="submit"]').should('be.visible').and('contain', 'Aggiungi Prodotto');
     });
   
-    it('displays validation errors for empty required fields', () => {
-      // Clicca il pulsante "Aggiungi Prodotto" senza compilare il form
+    it('Test validazione form', () => {
       cy.get('button[type="submit"]').click();
   
-      // Controlla i messaggi di errore di validazione
       cy.contains('Il titolo è obbligatorio.').should('be.visible');
       cy.contains('La categoria è obbligatoria.').should('be.visible');
       cy.contains('Il prezzo è obbligatorio.').should('be.visible');
     });
   
-    it('adds a valid product successfully and displays a toast notification', () => {
-      // Compila il form con dati validi
+    it('Test aggiunta prodotto e visualizzazione Toats', () => {
       cy.get('input[name="title"]').type('Prodotto Test');
       cy.get('input[name="category"]').type('Categoria Test');
       cy.get('input[name="price"]').type('99');
-      cy.get('input[name="employee"]').type('Mario Rossi');
+      cy.get('input[name="employee"]').type(' Rossi');
       cy.get('textarea[name="description"]').type('Descrizione del prodotto test.');
   
-      // Clicca su "Aggiungi Prodotto"
       cy.get('button[type="submit"]').click();
   
       // Controlla la presenza del toast di conferma
       cy.get('.toast').should('be.visible').and('contain', 'Prodotto aggiunto con successo!');
     });
   
-    it('validates price input for non-numeric or invalid values', () => {
+    it('Test validazione campo "Prezzo"', () => {
       // Inserisci un valore superiore al limite
       cy.get('input[name="price"]').clear().type('10000000').blur();
       cy.contains('Max 9999999.99.').should('be.visible');
     });
   
-    it('handles adding and deleting reviews', () => {
+    it('Test aggiunta e rimozione recensioni', () => {
       // Aggiungi una recensione
       cy.get('textarea[name="reviewInput"]').type('Recensione 1');
       cy.get('button').contains('Aggiungi Recensione').click();
@@ -64,10 +59,10 @@ describe('AddProduct Page Tests', () => {
       cy.contains('Recensione 1').should('not.exist');
     });
   
-    it('paginates reviews correctly', () => {
+    it('Test paginazione recensioni', () => {
       // Aggiungi più recensioni fino a superare il limite per pagina
       for (let i = 1; i <= 15; i++) {
-        cy.get('textarea[name="reviewInput"]').type(`Recensione ${i}`);
+        cy.get('textarea[name="reviewInput"]').type('Recensione '+i);
         cy.get('button').contains('Aggiungi Recensione').click();
       }
   

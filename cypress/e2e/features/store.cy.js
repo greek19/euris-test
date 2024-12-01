@@ -1,8 +1,8 @@
 import { store } from '../../../src/features/store';
 import { productsApi } from '../../../src/features/products/productsApi';
 
-describe('Redux Store Tests', () => {
-  it('should initialize the store with the correct reducers', () => {
+describe('Test store.js', () => {
+  it('Test inizializzazione store con i corretti reducer', () => {
     cy.wrap(store.getState()).then((state) => {
       // Verifica che lo stato iniziale contenga auth
       expect(state.auth).to.exist;
@@ -12,7 +12,7 @@ describe('Redux Store Tests', () => {
     });
   });
 
-  it('should handle dispatching actions to the auth reducer', () => {
+  it('Test dispatch actions', () => {
     const initialAuthState = store.getState().auth;
 
     store.dispatch({ type: 'auth/login', payload: { username: 'testUser' } });
@@ -23,7 +23,7 @@ describe('Redux Store Tests', () => {
     });
   });
 
-  it('should persist the state using redux-persist', () => {
+  it('Test del persist', () => {
     store.dispatch({ type: 'auth/login', payload: { username: 'persistedUser' } });
 
     const persistedState = store.getState();

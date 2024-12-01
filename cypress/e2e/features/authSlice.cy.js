@@ -1,15 +1,12 @@
 import { store } from '../../../src/features/store'; // Importa il tuo store
 import { login, logout } from '../../../src/features/auth/authSlice'; // Importa le azioni
 
-describe('Auth Slice Tests', () => {
-  
-  // Prima di ogni test, fai un logout per resettare lo stato
-  beforeEach(() => {
+describe('Test authSlice', () => {
+    beforeEach(() => {
     store.dispatch(logout());
   });
 
-  it('should initialize the store with the correct initial state', () => {
-    // Verifica che lo stato iniziale di auth sia corretto
+  it('Test inizializzazione store', () => {
     cy.wrap(store.getState()).then((state) => {
       expect(state.auth).to.deep.equal({
         user: null,
@@ -18,15 +15,12 @@ describe('Auth Slice Tests', () => {
     });
   });
 
-  it('should handle login action correctly', () => {
-    // Stato iniziale dell'auth
+  it('Test login', () => {
     const initialState = store.getState().auth;
 
-    // Dispatcha l'azione login
     const user = { username: 'testUser' };
     store.dispatch(login(user));
 
-    // Verifica che lo stato di auth sia cambiato
     cy.wrap(store.getState()).then((state) => {
       expect(state.auth).to.not.deep.equal(initialState);
       expect(state.auth.user).to.deep.equal(user);
@@ -34,8 +28,7 @@ describe('Auth Slice Tests', () => {
     });
   });
 
-  it('should handle logout action correctly', () => {
-    // Primo login
+  it('Test logout', () => {
     const user = { username: 'testUser' };
     store.dispatch(login(user));
 
@@ -45,7 +38,6 @@ describe('Auth Slice Tests', () => {
       expect(state.auth.isAuthenticated).to.be.true;
     });
 
-    // Dispatcha l'azione logout
     store.dispatch(logout());
 
     // Verifica che lo stato sia tornato a quello iniziale
@@ -55,8 +47,7 @@ describe('Auth Slice Tests', () => {
     });
   });
 
-  it('should not update state if login is dispatched with an already authenticated user', () => {
-    // Primo login
+  it('Test stato se si prova a rifare un login con un utente già autenticato', () => {
     const user = { username: 'testUser' };
     store.dispatch(login(user));
 
@@ -66,7 +57,6 @@ describe('Auth Slice Tests', () => {
       expect(state.auth.isAuthenticated).to.be.true;
     });
 
-    // Dispatcha l'azione login con lo stesso utente
     store.dispatch(login(user));
 
     // Verifica che lo stato non cambi
@@ -76,8 +66,7 @@ describe('Auth Slice Tests', () => {
     });
   });
 
-  it('should persist state across sessions (optional test if redux-persist is used)', () => {
-    // Dispatcha login
+  it('Test persist', () => {
     const user = { username: 'persistedUser' };
     store.dispatch(login(user));
 

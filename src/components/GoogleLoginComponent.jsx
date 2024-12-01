@@ -13,7 +13,6 @@ const GoogleLoginComponent = () => {
 
   const handleSuccess = (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse.credential);
-    console.log("Utente autenticato:", decoded);
     dispatch(login({username:decoded.given_name}))
     navigate(ROOT)
   };
