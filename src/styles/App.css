@@ -26,26 +26,21 @@ main {
   overflow-y: auto;
 }
 
+/* Forza il contenitore del bottone di Google a occupare lo spazio */
 .google-login-container {
-  width: 100%; /* Forza il contenitore a occupare il 100% dello spazio disponibile */
+  width: 100%; /* Occupa la larghezza del genitore */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Stile del bottone di Google */
 .google-login-button {
-  width: 100%; /* La larghezza coincide con il contenitore genitore */
-  height: 48px; /* Altezza del pulsante uniforme */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1rem; /* Uniforma il font al pulsante accanto */
-  background-color: white; /* Imposta uno sfondo neutro */
-  border: 1px solid #ccc; /* Per replicare il pulsante Bootstrap */
-  border-radius: 4px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.google-login-button > div {
+  width: 100%; /* Allinea il bottone alla larghezza */
+  height: 48px; /* Stessa altezza del bottone "Login" */
+  font-size: 1rem;
+  border: none; /* Rimuovi eventuali bordi */
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%; /* Forza l'interno del pulsante a rispettare la larghezza */
 }

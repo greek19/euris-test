@@ -27,7 +27,9 @@ const GoogleLoginComponent = () => {
         <GoogleLogin
           onSuccess={handleSuccess}
           onError={handleError}
-          className={"google-login-button"}
+          size="large"    // Forza una dimensione "large" per il bottone
+          width="100%"    // Estendi il bottone alla larghezza del contenitore
+          className="google-login-button"
         />
       </div>
     </GoogleOAuthProvider>
