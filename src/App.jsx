@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Products from './pages/Products';
-import Layout from './components/layout/Layout';
+import {Layout} from './components/layout/Layout';
 import AddProduct from './pages/AddProduct';
 import CategoryChart from './pages/CategoryChart';
 import Login from './pages/Login';

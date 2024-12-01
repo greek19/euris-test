@@ -4,8 +4,9 @@ import Footer from './Footer';
 import { Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import HeaderNonAuth from './HeaderNonAuth';
+import PropTypes from 'prop-types';
 
-const Layout = ({ children }) => {
+export const Layout = ({ children }) => {
   const isAuthenticated = useSelector((state)=> state.auth.isAuthenticated);
 
   return (
@@ -23,4 +24,6 @@ const Layout = ({ children }) => {
   );
 };
 
-export default Layout;
+Layout.propTypes = {
+  children: PropTypes.any.isRequired,
+} 

@@ -5,8 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Form, Alert } from 'react-bootstrap';
 import { ERROR_MESSAGES_LOGIN, MOCK_USERS } from '../utility/constants'; 
 import GoogleLoginComponent from '../components/GoogleLoginComponent';
+import PropTypes from 'prop-types';
 
 const ErrorAlert = ({ error }) => (error ? <Alert variant="danger">{error}</Alert> : null);
+
+ErrorAlert.propTypes = {
+  error: PropTypes.string
+}
 
 const Login = () => {
   const [username, setUsername] = useState('');

@@ -2,8 +2,8 @@ import React from 'react';
 import { Card, Button, Row, Col, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { CHART, PRODUCTS } from '../utility/routesConstants';
 import {CARD_DETAILS} from '../utility/constants'
+import PropTypes from 'prop-types';
 
 const CardItem = ({ title, text, link, buttonText, disabled }) => (
   <Col md={4} className="p-2">
@@ -26,6 +26,14 @@ const CardItem = ({ title, text, link, buttonText, disabled }) => (
     </Card>
   </Col>
 );
+
+CardItem.propTypes = {
+  title: PropTypes.string,
+  text:  PropTypes.string,
+  link: PropTypes.string,
+  buttonText:  PropTypes.string,
+  disabled:  PropTypes.bool
+}
 
 const Home = () => {
   const user = useSelector((state) => state.auth.user);

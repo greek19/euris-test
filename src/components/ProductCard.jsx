@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Card, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
-import TruncatedText from "./TruncatedText";
+import {TruncatedText} from "./TruncatedText";
 import PropTypes from "prop-types";
 
 export const ProductCard = ({ product, onShowReviews, onShowDelete, layoutMode }) => {

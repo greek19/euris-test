@@ -14,7 +14,6 @@ import {
 import { useAddProductMutation } from "../features/products/productsApi";
 import { useSelector } from "react-redux";
 import { ReviewsList } from "../components/ReviewsList";
-import { validatePriceInput } from "../utility/functions";
 import { INPUT_ADD_PRODUCT } from "../utility/constants";
 
 
@@ -102,7 +101,7 @@ const AddProduct = () => {
           <Form>
             {INPUT_ADD_PRODUCT.map(({ name, ...props }) => (
               <div className="mb-3" key={name}>
-                <label className="form-label fw-bold">{props.label}</label>
+                <label className="form-label fw-bold">{props?.label}</label>
                 <Field name={name} className="form-control" {...props} />
                 <div className="invalid-feedback d-block">
                   <ErrorMessage name={name} />

@@ -1,7 +1,8 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-const TruncatedText = ({ text, maxLength = 100 }) => {
+export const TruncatedText = ({ text, maxLength = 100 }) => {
   const isTruncated = text.length > maxLength;
   const displayedText = isTruncated ? `${text.slice(0, maxLength)}...` : text;
 
@@ -21,4 +22,7 @@ const TruncatedText = ({ text, maxLength = 100 }) => {
   );
 };
 
-export default TruncatedText;
+TruncatedText.propTypes = {
+  text: PropTypes.string.isRequired,
+  maxLength: PropTypes.number
+} 
