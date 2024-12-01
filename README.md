@@ -11,6 +11,7 @@ Inoltre, un grafico visualizza i prodotti per categoria. È costruita utilizzand
 - [Tecnologie Utilizzate](#tecnologie-utilizzate)
 - [Installazione e Avvio](#installazione-e-avvio)
 - [Workflow](#Workflow)
+- [Possibili Nuove Implementazioni](#possibili-nuove-implementazioni)
 
 
 ---
